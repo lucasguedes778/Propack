@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
 
-class Example extends StatelessWidget {
+class Example extends StatelessWidget{
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body: WrapExample(),
-    );
+    return WrapExample();
   }
 }
 
@@ -22,7 +20,7 @@ class ClientData{
   }
 }
 
-class WrapExample extends StatefulWidget {
+class WrapExample extends StatefulWidget{
   final Offset offset;
 
   WrapExample({Key key, this.offset}) : super(key: key);
@@ -31,7 +29,9 @@ class WrapExample extends StatefulWidget {
   _WrapExampleState createState() => _WrapExampleState();
 }
 
-class _WrapExampleState extends State<WrapExample> {
+class _WrapExampleState extends State<WrapExample> with  SingleTickerProviderStateMixin {
+  TabController controller;
+
   final double _iconSize = 90;
   List<Widget> _tiles;
   List<ClientData> clients = <ClientData>[
@@ -42,6 +42,7 @@ class _WrapExampleState extends State<WrapExample> {
 
   @override
   void initState() {
+    controller = new TabController(length: 2, vsync: this);
     super.initState();
 
     _tiles = <Widget>[];
@@ -59,6 +60,12 @@ class _WrapExampleState extends State<WrapExample> {
       ));
     }
 
+  }
+
+  @override
+  void dispose(){
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -109,7 +116,7 @@ class _WrapExampleState extends State<WrapExample> {
             IconButton(
               iconSize: 50,
               icon: Icon(Icons.add_circle),
-              color: Colors.deepOrange,
+              color: Colors.blue,
               padding: const EdgeInsets.all(0.0),
               onPressed: () {
                 var newTile = Container(
@@ -144,9 +151,28 @@ class _WrapExampleState extends State<WrapExample> {
       ],
     );
 
-    return SingleChildScrollView(
-      child: column,
+    return DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("VH Prototype"),
+          bottom: TabBar(
+          tabs: [
+            Tab(text: "1st floor"),
+            Tab(text: "2th floor"),
+            Tab(text: "3th floor"),
+          ],
+          ),),
+          body: TabBarView(
+            children:[
+              SingleChildScrollView(
+                  child: column
+              ),
+              Container(),
+              Container()
+            ]
+          ),
+        )
     );
-
   }
 }

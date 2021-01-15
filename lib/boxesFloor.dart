@@ -1,35 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
+import 'package:victor_hugo_app_prototype/generalData.dart';
 
-class Example extends StatelessWidget{
-  @override
-  Widget build(BuildContext context){
-    return WrapExample();
-  }
-}
 
-class ClientData{
-  String name;
-  int verticalPosition;
-  int horizontalPosition;
-
-  ClientData(String name, int verticalPosition, int horizontalPosition){
-    this.name = name;
-    this.verticalPosition = verticalPosition;
-    this.horizontalPosition = horizontalPosition;
-  }
-}
-
-class WrapExample extends StatefulWidget{
+class BoxesFloor extends StatefulWidget{
   final Offset offset;
 
-  WrapExample({Key key, this.offset}) : super(key: key);
+  BoxesFloor({Key key, this.offset}) : super(key: key);
 
   @override
-  _WrapExampleState createState() => _WrapExampleState();
+  _BoxesFloorState createState() => _BoxesFloorState();
 }
 
-class _WrapExampleState extends State<WrapExample> with  SingleTickerProviderStateMixin {
+class _BoxesFloorState extends State<BoxesFloor> with  SingleTickerProviderStateMixin {
   TabController controller;
 
   final double _iconSize = 90;
@@ -55,7 +38,7 @@ class _WrapExampleState extends State<WrapExample> with  SingleTickerProviderSta
         width: 100,
         height: 100,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black)
+            border: Border.all(color: Colors.black)
         ),
       ));
     }
@@ -151,28 +134,8 @@ class _WrapExampleState extends State<WrapExample> with  SingleTickerProviderSta
       ],
     );
 
-    return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text("VH Prototype"),
-          bottom: TabBar(
-          tabs: [
-            Tab(text: "1st floor"),
-            Tab(text: "2th floor"),
-            Tab(text: "3th floor"),
-          ],
-          ),),
-          body: TabBarView(
-            children:[
-              SingleChildScrollView(
-                  child: column
-              ),
-              Container(),
-              Container()
-            ]
-          ),
-        )
+    return SingleChildScrollView(
+        child: column
     );
   }
 }

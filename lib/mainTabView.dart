@@ -20,7 +20,9 @@ class MainTabView extends StatelessWidget{
               physics: NeverScrollableScrollPhysics(),
               children:[
                 BoxesFloor(),
-                Container(),
+                Container(
+                  color: Colors.red,
+                ),
                 Container()
               ]
           ),

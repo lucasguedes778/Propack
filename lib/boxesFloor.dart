@@ -112,69 +112,88 @@ class _BoxesFloorState extends State<BoxesFloor>{
         }
     );
 
-    var column = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        InteractiveViewer(
-            child: wrap
-        ),
-        Padding(
+    var component = Stack(
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      // mainAxisAlignment: MainAxisAlignment.end,
 
-          padding: EdgeInsets.all(16.0),
-          child: Container(
-            padding: EdgeInsets.all(20),
-            color: Colors.blue,
-            child: TextField(
-              onChanged: (text){
-                newClientName = text;
-              },
-              style: TextStyle(
-                color: Colors.white
-              ),
-              decoration: InputDecoration(
-//              border: InputBorder.none,
-                  hintStyle: TextStyle(
-                      color: Colors.white
+      children: <Widget>[
+        Positioned.fill(
+            child: InteractiveViewer(
+                child: wrap
+            )
+        ),
+//         Padding(
+//           padding: EdgeInsets.all(16.0),
+//           child: Container(
+//             padding: EdgeInsets.all(20),
+//             color: Colors.blue,
+//             child: TextField(
+//               onChanged: (text){
+//                 newClientName = text;
+//               },
+//               style: TextStyle(
+//                 color: Colors.white
+//               ),
+//               decoration: InputDecoration(
+// //              border: InputBorder.none,
+//                   hintStyle: TextStyle(
+//                       color: Colors.white
+//                   ),
+//                   hintText: 'Digite o nome do cliente'
+//               ),) ,
+//           )
+//         ),
+          Positioned(
+              bottom: 0.0,
+              right: 0.0,
+              child: ButtonBar(
+                alignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  IconButton(
+                    iconSize: 50,
+                    icon: Icon(Icons.add_circle),
+                    color: Colors.blue,
+                    padding: const EdgeInsets.all(0.0),
+                    onPressed: () {
+                      // var newTile = getBoxItems(newClientName);
+                      // newClientName = "";
+                      // setState(() {
+                      //   _tiles.add(newTile);
+                      // });
+                      showDialog(
+                          context: context,
+                          builder: (context){
+                            return Dialog(
+                              child: Container(
+                                width: 300,
+                                height: 400,
+                                child: Text("Pop up!"),
+                              ),
+                            );
+                          }
+                      );
+                    },
                   ),
-                  hintText: 'Digite o nome do cliente'
-              ),) ,
+                  //            IconButton(
+                  //              iconSize: 50,
+                  //              icon: Icon(Icons.remove_circle),
+                  //              color: Colors.teal,
+                  //              padding: const EdgeInsets.all(0.0),
+                  //              onPressed: () {
+                  //                setState(() {
+                  //                  _tiles.removeAt(0);
+                  //                });
+                  //              },
+                  //            ),
+                ],
+              )
           )
-        ),
-        ButtonBar(
-          alignment: MainAxisAlignment.end,
-          children: <Widget>[
-            IconButton(
-              iconSize: 50,
-              icon: Icon(Icons.add_circle),
-              color: Colors.blue,
-              padding: const EdgeInsets.all(0.0),
-              onPressed: () {
-                var newTile = getBoxItems(newClientName);
-                newClientName = "";
-                setState(() {
-                  _tiles.add(newTile);
-                });
-              },
-            ),
-//            IconButton(
-//              iconSize: 50,
-//              icon: Icon(Icons.remove_circle),
-//              color: Colors.teal,
-//              padding: const EdgeInsets.all(0.0),
-//              onPressed: () {
-//                setState(() {
-//                  _tiles.removeAt(0);
-//                });
-//              },
-//            ),
-          ],
-        ),
+
       ],
     );
 
-    return SingleChildScrollView(
-        child:column
+    return Container(
+        child: component
     );
   }
 }

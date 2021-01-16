@@ -9,4 +9,3 @@ class ClientData{
     this.horizontalPosition = horizontalPosition;
   }
 }
-

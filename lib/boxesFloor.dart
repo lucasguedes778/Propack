@@ -2,6 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:victor_hugo_app_prototype/generalData.dart';
 
+Container getBoxItems(String clientName){
+  return Container(
+    padding: EdgeInsets.all(3),
+    child: Center(
+      child: Text(
+          clientName,
+          style: TextStyle(fontSize: 10)
+      ),
+    ),
+    width: 47,
+    height: 47,
+    decoration: BoxDecoration(
+        border: Border.all(color: Colors.black)
+    ),
+  );
+}
+
 
 class BoxesFloor extends StatefulWidget{
   final Offset offset;
@@ -12,8 +29,7 @@ class BoxesFloor extends StatefulWidget{
   _BoxesFloorState createState() => _BoxesFloorState();
 }
 
-class _BoxesFloorState extends State<BoxesFloor> with  SingleTickerProviderStateMixin {
-  TabController controller;
+class _BoxesFloorState extends State<BoxesFloor>{
 
   final double _iconSize = 90;
   List<Widget> _tiles;
@@ -21,35 +37,25 @@ class _BoxesFloorState extends State<BoxesFloor> with  SingleTickerProviderState
     ClientData("Cliente 1", 0,1),
     ClientData("Cliente 2", 0,2),
     ClientData("Cliente 3", 0,3),
+    ClientData("Cliente 4", 0,3),
+    ClientData("Cliente 5", 0,3),
+    ClientData("Cliente 6", 0,3),
+    ClientData("Cliente 7", 0,3),
   ];
 
   @override
   void initState() {
-    controller = new TabController(length: 2, vsync: this);
     super.initState();
 
     _tiles = <Widget>[];
 
     for(int i = 0; i < clients.length; i++){
-      _tiles.add(Container(
-        child: Center(
-          child: Text(clients[i].name),
-        ),
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black)
-        ),
-      ));
+      _tiles.add(getBoxItems(clients[i].name));
     }
 
   }
 
-  @override
-  void dispose(){
-    controller.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +69,7 @@ class _BoxesFloorState extends State<BoxesFloor> with  SingleTickerProviderState
     }
 
     var wrap = ReorderableWrap(
-        spacing: 8.0,
+        spacing: 2.0,
         runSpacing: 4.0,
         padding: const EdgeInsets.all(8),
         children: _tiles,
@@ -79,7 +85,7 @@ class _BoxesFloorState extends State<BoxesFloor> with  SingleTickerProviderState
     );
 
     var column = Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         wrap,
         Padding(
@@ -102,16 +108,7 @@ class _BoxesFloorState extends State<BoxesFloor> with  SingleTickerProviderState
               color: Colors.blue,
               padding: const EdgeInsets.all(0.0),
               onPressed: () {
-                var newTile = Container(
-                  child: Center(
-                    child: Text(newClientName),
-                  ),
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black)
-                  ),
-                );
+                var newTile = getBoxItems(newClientName);
                 newClientName = "";
                 setState(() {
                   _tiles.add(newTile);
@@ -135,7 +132,7 @@ class _BoxesFloorState extends State<BoxesFloor> with  SingleTickerProviderState
     );
 
     return SingleChildScrollView(
-        child: column
+        child: column,
     );
   }
 }

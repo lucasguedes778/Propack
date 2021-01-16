@@ -17,6 +17,7 @@ class MainTabView extends StatelessWidget{
               ],
             ),),
           body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               children:[
                 BoxesFloor(),
                 Container(),

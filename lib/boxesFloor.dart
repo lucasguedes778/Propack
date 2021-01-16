@@ -1,18 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:victor_hugo_app_prototype/generalData.dart';
 
 Container getBoxItems(String clientName){
   return Container(
-    padding: EdgeInsets.all(3),
     child: Center(
       child: Text(
           clientName,
-          style: TextStyle(fontSize: 10)
+          style: TextStyle(fontSize: 5)
       ),
     ),
-    width: 47,
-    height: 47,
+    width: 29,
+    height: 29,
     decoration: BoxDecoration(
         border: Border.all(color: Colors.black)
     ),
@@ -34,13 +34,40 @@ class _BoxesFloorState extends State<BoxesFloor>{
   final double _iconSize = 90;
   List<Widget> _tiles;
   List<ClientData> clients = <ClientData>[
-    ClientData("Cliente 1", 0,1),
-    ClientData("Cliente 2", 0,2),
-    ClientData("Cliente 3", 0,3),
-    ClientData("Cliente 4", 0,3),
-    ClientData("Cliente 5", 0,3),
-    ClientData("Cliente 6", 0,3),
-    ClientData("Cliente 7", 0,3),
+    ClientData("1", 0,1),
+    ClientData("2", 0,2),
+    ClientData("3", 0,3),
+    ClientData("4", 0,3),
+    ClientData("5", 0,3),
+    ClientData("6", 0,3),
+    ClientData("7", 0,3),
+    ClientData("8", 0,3),
+    ClientData("9", 0,3),
+    ClientData("10", 0,3),
+    ClientData("11", 0,3),
+    ClientData("12", 0,1),
+    ClientData("13", 0,2),
+    ClientData("14", 0,3),
+    ClientData("15", 0,3),
+    ClientData("16", 0,3),
+    ClientData("17", 0,3),
+    ClientData("18", 0,3),
+    ClientData("19", 0,3),
+    ClientData("20", 0,3),
+    ClientData("21", 0,3),
+    ClientData("22", 0,3),
+    ClientData("23", 0,1),
+    ClientData("24", 0,2),
+    ClientData("25", 0,3),
+    ClientData("26", 0,3),
+    ClientData("27", 0,3),
+    ClientData("28", 0,3),
+    ClientData("29", 0,3),
+    ClientData("30", 0,3),
+    ClientData("31", 0,3),
+    ClientData("32", 0,3),
+    ClientData("33", 0,3),
+
   ];
 
   @override
@@ -69,6 +96,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
     }
 
     var wrap = ReorderableWrap(
+        maxMainAxisCount: 11,
         spacing: 2.0,
         runSpacing: 4.0,
         padding: const EdgeInsets.all(8),
@@ -86,18 +114,32 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
     var column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        wrap,
+        InteractiveViewer(
+            child: wrap
+        ),
         Padding(
+
           padding: EdgeInsets.all(16.0),
-          child: TextField(
-            onChanged: (text){
-              newClientName = text;
-            },
-            decoration: InputDecoration(
+          child: Container(
+            padding: EdgeInsets.all(20),
+            color: Colors.blue,
+            child: TextField(
+              onChanged: (text){
+                newClientName = text;
+              },
+              style: TextStyle(
+                color: Colors.white
+              ),
+              decoration: InputDecoration(
 //              border: InputBorder.none,
-                hintText: 'Digite o nome do cliente'
-            ),) ,
+                  hintStyle: TextStyle(
+                      color: Colors.white
+                  ),
+                  hintText: 'Digite o nome do cliente'
+              ),) ,
+          )
         ),
         ButtonBar(
           alignment: MainAxisAlignment.end,
@@ -132,7 +174,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
     );
 
     return SingleChildScrollView(
-        child: column,
+        child:column
     );
   }
 }

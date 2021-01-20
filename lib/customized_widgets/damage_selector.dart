@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
+//ignore: must_be_immutable
 class DamageSelector extends StatefulWidget {
+  Function onSelected;
+  DamageSelector({Key key, this.onSelected}) : super(key: key);
+
   @override
   _DamageSelectorState createState() => _DamageSelectorState();
 }
 
 class _DamageSelectorState extends State<DamageSelector> {
-  String dropdownValue = "Fire";
+  String dropdownValue = "None";
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +27,10 @@ class _DamageSelectorState extends State<DamageSelector> {
       onChanged: (String newValue) {
         setState(() {
           dropdownValue = newValue;
+          widget.onSelected(dropdownValue);
         });
       },
-      items: <String>['Fire', 'Water', 'Mold']
+      items: <String>['Fire', 'Water', 'Mold', "None"]
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,

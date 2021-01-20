@@ -4,8 +4,9 @@ import 'damage_selector.dart';
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
    String _newClientName;
-  var dialogContext;
-  Function onConfirm;
+   String _newClientDamageType;
+   var dialogContext;
+   Function onConfirm;
 
   AddBoxDialog({Key key, this.dialogContext, this.onConfirm}) : super(key: key);
 
@@ -55,7 +56,11 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                                 ),
                               ),
                             ),
-                            DamageSelector(),
+                            DamageSelector(
+                              onSelected: (String selectedType){
+                                widget._newClientDamageType = selectedType;
+                              },
+                            ),
                           ],
                         ),
 
@@ -88,7 +93,8 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                         ),
                         RaisedButton(
                           onPressed: (){
-                            widget.onConfirm(widget._newClientName);
+                            print("new client damage type: ${widget._newClientDamageType}");
+                            widget.onConfirm(widget._newClientName, widget._newClientDamageType);
                             Navigator.pop(widget.dialogContext);
                           },
                           padding: EdgeInsets.all(0.0),

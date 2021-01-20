@@ -23,7 +23,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
   ];
 
   _addClientBox(String clientName, String damageType){
-    _tiles.add(ItemsBox(clientName: clientName, context: context));
+    _tiles.add(ItemsBox(clientName: clientName, context: context, damageType: damageType));
   }
 
   @override
@@ -99,9 +99,9 @@ class _BoxesFloorState extends State<BoxesFloor>{
                             return Dialog(
                               child: AddBoxDialog(
                                 dialogContext: dialogContext,
-                                onConfirm: (String newClientName){
+                                onConfirm: (String newClientName, String damageType){
                                   setState(() {
-                                    _addClientBox(newClientName, "Fire");
+                                    _addClientBox(newClientName, damageType);
                                   });
                                 },
                               ),

@@ -1,38 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
+import 'package:victor_hugo_app_prototype/customized_widgets/add_box_dialog.dart';
 import 'package:victor_hugo_app_prototype/generalData.dart';
-
-Container getBoxItems(String clientName, context){
-  return Container(
-    child: Center(
-
-      child: InkWell(
-        onDoubleTap: () {
-            showDialog(
-                context: context,
-                builder: (context){
-                  return Dialog(
-                    child: Container(
-                      width: 300,
-                      height: 400,
-                      child: Text(clientName),
-                    ),
-                  );
-                }
-            );
-          },
-        child: Text(clientName),
-      )
-    ),
-    width: 29,
-    height: 29,
-    decoration: BoxDecoration(
-        border: Border.all(color: Colors.black)
-    ),
-  );
-}
-
+import 'customized_widgets/items_box.dart';
 
 class BoxesFloor extends StatefulWidget{
   final Offset offset;
@@ -91,7 +62,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
     _tiles = <Widget>[];
 
     for(int i = 0; i < clients.length; i++){
-      _tiles.add(getBoxItems(clients[i].name, context));
+      _tiles.add(ItemsBox(clientName: clients[i].name, context: context));
     }
 
   }
@@ -127,17 +98,12 @@ class _BoxesFloorState extends State<BoxesFloor>{
     );
 
     var component = Stack(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      // mainAxisAlignment: MainAxisAlignment.end,
-
       children: <Widget>[
         Positioned.fill(
             child: InteractiveViewer(
                 child: wrap
             )
         ),
-
-
           Positioned(
               bottom: 0.0,
               right: 0.0,
@@ -160,108 +126,12 @@ class _BoxesFloorState extends State<BoxesFloor>{
                           builder: (context){
                             var dialogContext = context;
                             return Dialog(
-                              child: Container(
-                                width: 300,
-                                height: 400,
-                                child: Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Container(
-                                      child: Stack(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              TextField(
-                                                onChanged: (text){
-                                                  newClientName = text;
-                                                },
-                                                style: TextStyle(
-                                                    color: Colors.black
-                                                ),
-                                                decoration: InputDecoration(
-                                                  // border: InputBorder.none,
-                                                    prefixIcon: Icon(Icons.person_add_alt_1),
-                                                    hintStyle: TextStyle(
-                                                        color: Colors.grey
-                                                    ),
-                                                    hintText: 'Digite o nome do cliente'
-                                                ),) ,
-                                              Padding(
-                                                  padding: EdgeInsets.only(top:10.0),
-                                                  child: Text(
-                                                  "Tipo de dano:",
-                                                    style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
-
-                                              )
-                                            ],
-                                          ),
-                                          Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                RaisedButton(
-                                                  onPressed: (){
-                                                    Navigator.pop(dialogContext);
-                                                  },
-                                                  padding: EdgeInsets.all(0.0),
-                                                  child: Container(
-                                                    color: Colors.grey,
-                                                    width: 100,
-                                                    height: 50,
-                                                    child: Center(
-                                                      child: Text(
-                                                        "Cancelar",
-                                                        style: TextStyle(
-                                                            color: Colors.white
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                RaisedButton(
-                                                  padding: EdgeInsets.all(0.0),
-                                                  child: Container(
-                                                    color: Colors.blue,
-                                                    width: 100,
-                                                    height: 50,
-                                                    child: Center(
-                                                      child: Text(
-                                                        "Confirmar",
-                                                        style: TextStyle(
-                                                            color: Colors.white
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    )
-                                ),
-                              ),
+                              child: AddBoxDialog(dialogContext: dialogContext),
                             );
                           }
                       );
                     },
                   ),
-                  //            IconButton(
-                  //              iconSize: 50,
-                  //              icon: Icon(Icons.remove_circle),
-                  //              color: Colors.teal,
-                  //              padding: const EdgeInsets.all(0.0),
-                  //              onPressed: () {
-                  //                setState(() {
-                  //                  _tiles.removeAt(0);
-                  //                });
-                  //              },
-                  //            ),
                 ],
               )
           )
@@ -274,3 +144,5 @@ class _BoxesFloorState extends State<BoxesFloor>{
     );
   }
 }
+
+

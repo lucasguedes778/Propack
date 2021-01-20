@@ -7,6 +7,13 @@ class MainTabView extends StatelessWidget{
     return DefaultTabController(
         length: 3,
         child: Scaffold(
+          drawer: Drawer(
+              child: ListView(
+                children: [
+                  Text("Side bar"),
+                ],
+              ),
+          ),
           appBar: AppBar(
             title: Text("Propack"),
             bottom: TabBar(

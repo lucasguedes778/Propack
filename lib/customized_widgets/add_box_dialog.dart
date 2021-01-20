@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'damage_selector.dart';
+import 'package:flutter/services.dart';
 
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
    String _newClientName;
    String _newClientDamageType;
+   double _newClientWidth = 29;
+   double _newClientHeight = 29;
    var dialogContext;
    Function onConfirm;
 
@@ -64,6 +67,75 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                           ],
                         ),
 
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top:10.0),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right:10.0),
+                              child: Text(
+                                "Largura:",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                                child: TextField(
+                                  onChanged: (text){
+                                    widget._newClientWidth = double.parse(text)*10;
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  style: TextStyle(
+                                      color: Colors.black
+                                  ),
+                                  decoration: InputDecoration(
+                                    // border: InputBorder.none,
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey
+                                      ),
+                                      hintText: '2.9'
+                                  ),)
+
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(right:10.0),
+                              child: Text(
+                                "Altura:",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                                child: TextField(
+                                  onChanged: (text){
+                                    widget._newClientHeight = double.parse(text)*10;
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  style: TextStyle(
+                                      color: Colors.black
+                                  ),
+                                  decoration: InputDecoration(
+                                    // border: InputBorder.none,
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey
+                                      ),
+                                      hintText: '2.9'
+                                  ),)
+
+                            )
+
+                          ],
+                        ),
+
                       )
                     ],
                   ),
@@ -94,7 +166,7 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                         RaisedButton(
                           onPressed: (){
                             print("new client damage type: ${widget._newClientDamageType}");
-                            widget.onConfirm(widget._newClientName, widget._newClientDamageType);
+                            widget.onConfirm(widget._newClientName, widget._newClientDamageType, widget._newClientWidth, widget._newClientHeight);
                             Navigator.pop(widget.dialogContext);
                           },
                           padding: EdgeInsets.all(0.0),

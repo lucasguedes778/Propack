@@ -99,9 +99,9 @@ class _BoxesFloorState extends State<BoxesFloor>{
                             return Dialog(
                               child: AddBoxDialog(
                                 dialogContext: dialogContext,
-                                onConfirm: (String newClientName, String damageType){
+                                onConfirm: (String newClientName, String damageType, double width, double height){
                                   setState(() {
-                                    _addClientBox(newClientName, damageType, 29,80);
+                                    _addClientBox(newClientName, damageType, width,height);
                                   });
                                 },
                               ),

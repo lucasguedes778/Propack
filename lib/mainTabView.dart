@@ -8,7 +8,7 @@ class MainTabView extends StatelessWidget{
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text("VH Prototype"),
+            title: Text("Propack"),
             bottom: TabBar(
               tabs: [
                 Tab(text: "1st floor"),
@@ -20,9 +20,7 @@ class MainTabView extends StatelessWidget{
               physics: NeverScrollableScrollPhysics(),
               children:[
                 BoxesFloor(),
-                Container(
-                  color: Colors.red,
-                ),
+                Container(),
                 Container()
               ]
           ),

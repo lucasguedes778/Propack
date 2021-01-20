@@ -5,10 +5,10 @@ class ItemsBox extends StatefulWidget {
   String clientName;
   String damageType;
   var context;
-  int width;
-  int height;
+  double width;
+  double height;
 
-  ItemsBox({Key key,this.clientName, this.context, this.damageType}) : super(key: key);
+  ItemsBox({Key key,this.clientName, this.context, this.damageType, this.width, this.height}) : super(key: key);
 
   @override
   _ItemsBoxState createState() => _ItemsBoxState();
@@ -62,8 +62,8 @@ class _ItemsBoxState extends State<ItemsBox> {
             ),
           )
       ),
-      width: 29,
-      height: 29,
+      width: widget.width,
+      height: widget.height,
       decoration: BoxDecoration(
           color: getBoxColor(),
           border: Border.all(color: Colors.black)

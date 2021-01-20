@@ -20,40 +20,11 @@ class _BoxesFloorState extends State<BoxesFloor>{
   List<Widget> _tiles;
   List<ClientData> clients = <ClientData>[
     ClientData("1", 0,1),
-    ClientData("2", 0,2),
-    ClientData("3", 0,3),
-    ClientData("4", 0,3),
-    ClientData("5", 0,3),
-    ClientData("6", 0,3),
-    ClientData("7", 0,3),
-    ClientData("8", 0,3),
-    ClientData("9", 0,3),
-    ClientData("10", 0,3),
-    ClientData("11", 0,3),
-    ClientData("12", 0,1),
-    ClientData("13", 0,2),
-    ClientData("14", 0,3),
-    ClientData("15", 0,3),
-    ClientData("16", 0,3),
-    ClientData("17", 0,3),
-    ClientData("18", 0,3),
-    ClientData("19", 0,3),
-    ClientData("20", 0,3),
-    ClientData("21", 0,3),
-    ClientData("22", 0,3),
-    ClientData("23", 0,1),
-    ClientData("24", 0,2),
-    ClientData("25", 0,3),
-    ClientData("26", 0,3),
-    ClientData("27", 0,3),
-    ClientData("28", 0,3),
-    ClientData("29", 0,3),
-    ClientData("30", 0,3),
-    ClientData("31", 0,3),
-    ClientData("32", 0,3),
-    ClientData("33", 0,3),
-
   ];
+
+  _addClientBox(String clientName, String damageType){
+    _tiles.add(ItemsBox(clientName: clientName, context: context));
+  }
 
   @override
   void initState() {
@@ -62,7 +33,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
     _tiles = <Widget>[];
 
     for(int i = 0; i < clients.length; i++){
-      _tiles.add(ItemsBox(clientName: clients[i].name, context: context));
+      _addClientBox(clients[i].name,"Fire");
     }
 
   }
@@ -126,7 +97,14 @@ class _BoxesFloorState extends State<BoxesFloor>{
                           builder: (context){
                             var dialogContext = context;
                             return Dialog(
-                              child: AddBoxDialog(dialogContext: dialogContext),
+                              child: AddBoxDialog(
+                                dialogContext: dialogContext,
+                                onConfirm: (String newClientName){
+                                  setState(() {
+                                    _addClientBox(newClientName, "Fire");
+                                  });
+                                },
+                              ),
                             );
                           }
                       );

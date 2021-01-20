@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'DamageSelector.dart';
+import 'damage_selector.dart';
 
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
    String _newClientName;
   var dialogContext;
+  Function onConfirm;
 
-  AddBoxDialog({Key key, this.dialogContext}) : super(key: key);
+  AddBoxDialog({Key key, this.dialogContext, this.onConfirm}) : super(key: key);
 
   @override
   _AddBoxDialogState createState() => _AddBoxDialogState();
@@ -86,6 +87,10 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                           ),
                         ),
                         RaisedButton(
+                          onPressed: (){
+                            widget.onConfirm(widget._newClientName);
+                            Navigator.pop(widget.dialogContext);
+                          },
                           padding: EdgeInsets.all(0.0),
                           child: Container(
                             color: Colors.blue,

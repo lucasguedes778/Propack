@@ -35,7 +35,12 @@ class _ItemsBoxState extends State<ItemsBox> {
                   }
               );
             },
-            child: Text(widget.clientName),
+            child: Text(
+                widget.clientName,
+                style: TextStyle(
+                  fontSize: 7,
+                ),
+            ),
           )
       ),
       width: 29,

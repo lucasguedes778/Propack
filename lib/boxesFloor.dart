@@ -22,8 +22,8 @@ class _BoxesFloorState extends State<BoxesFloor>{
     ClientData("1", 0,1),
   ];
 
-  _addClientBox(String clientName, String damageType, double width, double height){
-    _tiles.add(ItemsBox(clientName: clientName, context: context, damageType: damageType, width: width, height: height));
+  _addClientBox(String clientName, String damageType){
+    _tiles.add(ItemsBox(clientName: clientName, context: context, damageType: damageType));
   }
 
   @override
@@ -33,7 +33,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
     _tiles = <Widget>[];
 
     for(int i = 0; i < clients.length; i++){
-      _addClientBox(clients[i].name,"Fire", 60,29);
+      _addClientBox(clients[i].name,"Fire");
     }
 
   }
@@ -99,9 +99,9 @@ class _BoxesFloorState extends State<BoxesFloor>{
                             return Dialog(
                               child: AddBoxDialog(
                                 dialogContext: dialogContext,
-                                onConfirm: (String newClientName, String damageType, double width, double height){
+                                onConfirm: (String newClientName, String damageType){
                                   setState(() {
-                                    _addClientBox(newClientName, damageType, width,height);
+                                    _addClientBox(newClientName, damageType);
                                   });
                                 },
                               ),

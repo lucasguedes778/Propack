@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
    String _newClientName;
-   String _newClientDamageType;
+   String _newClientDamageType = "None";
    var dialogContext;
    Function onConfirm;
 
@@ -16,6 +16,7 @@ class AddBoxDialog extends StatefulWidget {
 }
 
 class _AddBoxDialogState extends State<AddBoxDialog> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -93,14 +94,15 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                           ),
                         ),
                         RaisedButton(
+                          color: Colors.blue,
                           onPressed: (){
-                            print("new client damage type: ${widget._newClientDamageType}");
-                            widget.onConfirm(widget._newClientName, widget._newClientDamageType);
-                            Navigator.pop(widget.dialogContext);
+                            if(widget._newClientDamageType != "None"){
+                              widget.onConfirm(widget._newClientName, widget._newClientDamageType);
+                              Navigator.pop(widget.dialogContext);
+                            }
                           },
                           padding: EdgeInsets.all(0.0),
                           child: Container(
-                            color: Colors.blue,
                             width: 100,
                             height: 50,
                             child: Center(

@@ -7,8 +7,9 @@ import 'customized_widgets/items_box.dart';
 
 class BoxesFloor extends StatefulWidget{
   final Offset offset;
+  List<ClientData> clients;
 
-  BoxesFloor({Key key, this.offset}) : super(key: key);
+  BoxesFloor({Key key, this.offset, this.clients}) : super(key: key);
 
   @override
   _BoxesFloorState createState() => _BoxesFloorState();
@@ -18,12 +19,11 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
   final double _iconSize = 90;
   List<Widget> _tiles;
-  List<ClientData> clients = <ClientData>[
-    ClientData("1", 0,1),
-  ];
+
 
   _addClientBox(String clientName, String damageType){
     _tiles.add(ItemsBox(clientName: clientName, context: context, damageType: damageType));
+    // clients.add(ClientData(clientName,0,1));
   }
 
   @override
@@ -32,8 +32,8 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
     _tiles = <Widget>[];
 
-    for(int i = 0; i < clients.length; i++){
-      _addClientBox(clients[i].name,"Fire");
+    for(int i = 0; i < widget.clients.length; i++){
+      _addClientBox(widget.clients[i].name, widget.clients[i].damageType);
     }
 
   }
@@ -102,6 +102,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                 onConfirm: (String newClientName, String damageType){
                                   setState(() {
                                     _addClientBox(newClientName, damageType);
+                                    widget.clients.add(ClientData(newClientName,damageType, 0, 1));
                                   });
                                 },
                               ),

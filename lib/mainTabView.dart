@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:victor_hugo_app_prototype/boxesFloor.dart';
+import 'package:victor_hugo_app_prototype/generalData.dart';
 
+//ignore: must_be_immutable
 class MainTabView extends StatelessWidget{
+
+  List<ClientData> clients = <ClientData>[
+    ClientData("1","Fire", 0,1),
+  ];
+
   @override
   Widget build(BuildContext context){
     return DefaultTabController(
@@ -26,7 +33,7 @@ class MainTabView extends StatelessWidget{
           body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children:[
-                BoxesFloor(),
+                BoxesFloor(clients: clients,),
                 Container(),
                 Container()
               ]

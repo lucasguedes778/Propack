@@ -65,7 +65,7 @@ class _ItemsBoxState extends State<ItemsBox> {
                   child: Text(
                     widget.clientName,
                     style: TextStyle(
-                        fontSize: 7,
+                        fontSize: 5,
                         color: Colors.black
                     ),
                   ),

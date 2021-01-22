@@ -41,18 +41,18 @@ class _BoxesFloorState extends State<BoxesFloor>{
   void initState() {
     super.initState();
 
+    _tiles = <Widget>[];
+
+    for(int i = 0; i < widget.clients.length; i++){
+      _addClientBox(widget.clients[i].name, widget.clients[i].reasons);
+    }
+
     controller.value = Matrix4(
       zoomScale,0,0,0,
       0,zoomScale,0,0,
       0,0,zoomScale,0,
       0,0,0,1.0,
     );
-
-    _tiles = <Widget>[];
-
-    for(int i = 0; i < widget.clients.length; i++){
-      _addClientBox(widget.clients[i].name, ["Fire","Floor change"]);
-    }
 
   }
 
@@ -83,7 +83,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
         onReorderStarted: (int index) {
           //this callback is optional
           debugPrint('${DateTime.now().toString().substring(5, 22)} reorder started: index:$index');
-        }
+        },
     );
 
     var component = Stack(
@@ -115,10 +115,10 @@ class _BoxesFloorState extends State<BoxesFloor>{
                             return Dialog(
                               child: AddBoxDialog(
                                 dialogContext: dialogContext,
-                                onConfirm: (String newClientName, String damageType){
+                                onConfirm: (String newClientName, List<String>newClientReasons){
                                   setState(() {
-                                    _addClientBox(newClientName, ["Fire"]);
-                                    widget.clients.add(ClientData(newClientName,damageType, 0, 1));
+                                    _addClientBox(newClientName, newClientReasons);
+                                    widget.clients.add(ClientData(newClientName,newClientReasons, 0, 1));
 
                                     setState(() {
                                       controller.value = Matrix4(

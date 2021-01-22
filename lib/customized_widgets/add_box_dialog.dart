@@ -5,7 +5,11 @@ import 'package:flutter/services.dart';
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
    String _newClientName;
-   String _newClientDamageTypes;
+   List<String> _newClientReasons = List<String>();
+
+   //Checkboxes variables
+   var fireSelected = false, moldSelected=false,fcSelected=false,waterSelected=false;
+
    var dialogContext;
    Function onConfirm;
 
@@ -43,26 +47,131 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                             hintStyle: TextStyle(
                                 color: Colors.grey
                             ),
-                            hintText: 'Digite o nome do cliente'
+                            hintText: "Type the client's name"
                         ),) ,
                       Padding(
                         padding: EdgeInsets.only(top:10.0),
-                        child: Row(
+                        child: Column(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(right:10.0),
+                            Align(
+                              alignment: Alignment.topLeft,
                               child: Text(
-                                "Tipo de dano:",
+                                "Reasons:",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
+
                               ),
                             ),
-                            DamageSelector(
-                              onSelected: (String selectedType){
-                                // widget._newClientDamageType = selectedType;
-                              },
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      Checkbox(
+                                          value: widget.fireSelected,
+                                          onChanged: (value){
+                                            setState(() {
+                                              widget.fireSelected = value;
+                                            });
+                                            if(value == true){
+                                              widget._newClientReasons.add("Fire");
+                                            }else{
+                                              widget._newClientReasons.remove("Fire");
+                                            }
+                                          }
+                                      ),
+                                      Text(
+                                        "Fire",
+                                        style: TextStyle(
+                                          fontSize: 12
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ),
+                                Expanded(
+                                    child: Row(
+                                      children: [
+                                        Checkbox(
+                                            value: widget.waterSelected,
+                                            onChanged: (value){
+                                              setState(() {
+                                                widget.waterSelected = value;
+                                              });
+                                              if(value == true){
+                                                widget._newClientReasons.add("Water");
+                                              }else{
+                                                widget._newClientReasons.remove("Water");
+                                              }
+                                            }
+                                        ),
+                                        Text(
+                                          "Water",
+                                          style: TextStyle(
+                                              fontSize: 12
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                )
+                              ],
                             ),
+                            Row(
+                              children: [
+                                Expanded(
+                                    child: Row(
+                                      children: [
+                                        Checkbox(
+                                            value: widget.moldSelected,
+                                            onChanged: (value){
+                                              setState(() {
+                                                widget.moldSelected = value;
+                                              });
+                                              if(value == true){
+                                                widget._newClientReasons.add("Mold");
+                                              }else{
+                                                widget._newClientReasons.remove("Mold");
+                                              }
+                                            }
+                                        ),
+                                        Text(
+                                          "Mold",
+                                          style: TextStyle(
+                                              fontSize: 12
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                ),
+                                Expanded(
+                                    child: Row(
+                                      children: [
+                                        Checkbox(
+                                            value: widget.fcSelected,
+                                            onChanged: (value){
+                                              setState(() {
+                                                widget.fcSelected = value;
+                                              });
+                                              if(value == true){
+                                                widget._newClientReasons.add("Floor change");
+                                              }else{
+                                                widget._newClientReasons.remove("Floor change");
+                                              }
+                                            }
+                                        ),
+                                        Text(
+                                          "Floor change",
+                                          style: TextStyle(
+                                              fontSize: 12
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                )
+                              ],
+                            ),
+
                           ],
                         ),
 
@@ -85,7 +194,7 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                             height: 50,
                             child: Center(
                               child: Text(
-                                "Cancelar",
+                                "Cancel",
                                 style: TextStyle(
                                     color: Colors.white
                                 ),
@@ -96,8 +205,7 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                         RaisedButton(
                           color: Colors.blue,
                           onPressed: (){
-                            var damagesExamples = ["Fire","Mold"];
-                            widget.onConfirm(widget._newClientName,damagesExamples);
+                            widget.onConfirm(widget._newClientName, widget._newClientReasons);
                             Navigator.pop(widget.dialogContext);
                           },
                           padding: EdgeInsets.all(0.0),
@@ -106,7 +214,7 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                             height: 50,
                             child: Center(
                               child: Text(
-                                "Confirmar",
+                                "Confirm",
                                 style: TextStyle(
                                     color: Colors.white
                                 ),

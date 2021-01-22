@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 class MainTabView extends StatelessWidget{
 
   List<ClientData> clients = <ClientData>[
-    ClientData("1","Fire", 0,1),
+    ClientData("Guedes",["Fire"], 0,1),
   ];
 
   @override

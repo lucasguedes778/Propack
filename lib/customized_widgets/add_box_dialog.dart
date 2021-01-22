@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
    String _newClientName;
-   String _newClientDamageType = "None";
+   String _newClientDamageTypes;
    var dialogContext;
    Function onConfirm;
 
@@ -60,7 +60,7 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                             ),
                             DamageSelector(
                               onSelected: (String selectedType){
-                                widget._newClientDamageType = selectedType;
+                                // widget._newClientDamageType = selectedType;
                               },
                             ),
                           ],
@@ -96,10 +96,9 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                         RaisedButton(
                           color: Colors.blue,
                           onPressed: (){
-                            if(widget._newClientDamageType != "None"){
-                              widget.onConfirm(widget._newClientName, widget._newClientDamageType);
-                              Navigator.pop(widget.dialogContext);
-                            }
+                            var damagesExamples = ["Fire","Mold"];
+                            widget.onConfirm(widget._newClientName,damagesExamples);
+                            Navigator.pop(widget.dialogContext);
                           },
                           padding: EdgeInsets.all(0.0),
                           child: Container(

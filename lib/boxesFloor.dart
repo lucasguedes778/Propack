@@ -25,8 +25,8 @@ class _BoxesFloorState extends State<BoxesFloor>{
   TransformationController controller = TransformationController();
 
 
-  _addClientBox(String clientName, String damageType){
-    _tiles.add(ItemsBox(clientName: clientName, context: context, damageType: damageType));
+  _addClientBox(String clientName, List<String> damageTypes){
+    _tiles.add(ItemsBox(clientName: clientName, context: context, damageTypes: damageTypes));
     if(zoomScale/1.3 >= 1.0){
       if(_tiles.length > 2){
         zoomScale = zoomScale/1.3;
@@ -51,7 +51,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
     _tiles = <Widget>[];
 
     for(int i = 0; i < widget.clients.length; i++){
-      _addClientBox(widget.clients[i].name, widget.clients[i].damageType);
+      _addClientBox(widget.clients[i].name, ["Fire","Floor change"]);
     }
 
   }
@@ -92,9 +92,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
             child: InteractiveViewer(
                 minScale: 1.0,
                 maxScale: 4.5,
-                onInteractionUpdate: (value){
-                  print(controller.value);
-                },
                 transformationController: controller,
                 child: wrap
             )
@@ -111,11 +108,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
                     color: Colors.blue,
                     padding: const EdgeInsets.all(0.0),
                     onPressed: () {
-                      // var newTile = getBoxItems(newClientName);
-                      // newClientName = "";
-                      // setState(() {
-                      //   _tiles.add(newTile);
-                      // });
                       showDialog(
                           context: context,
                           builder: (context){
@@ -125,7 +117,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                 dialogContext: dialogContext,
                                 onConfirm: (String newClientName, String damageType){
                                   setState(() {
-                                    _addClientBox(newClientName, damageType);
+                                    _addClientBox(newClientName, ["Fire"]);
                                     widget.clients.add(ClientData(newClientName,damageType, 0, 1));
 
                                     setState(() {

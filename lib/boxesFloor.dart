@@ -5,9 +5,11 @@ import 'package:victor_hugo_app_prototype/customized_widgets/add_box_dialog.dart
 import 'package:victor_hugo_app_prototype/generalData.dart';
 import 'customized_widgets/items_box.dart';
 
+//ignore: must_be_immutable
 class BoxesFloor extends StatefulWidget{
   final Offset offset;
   List<ClientData> clients;
+
 
   BoxesFloor({Key key, this.offset, this.clients}) : super(key: key);
 
@@ -19,16 +21,32 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
   final double _iconSize = 90;
   List<Widget> _tiles;
+  double zoomScale = 4.5;
+  TransformationController controller = TransformationController();
 
 
   _addClientBox(String clientName, String damageType){
     _tiles.add(ItemsBox(clientName: clientName, context: context, damageType: damageType));
-    // clients.add(ClientData(clientName,0,1));
+    if(zoomScale/1.3 >= 1.0){
+      if(_tiles.length > 2){
+        zoomScale = zoomScale/1.3;
+      }
+    }else{
+      zoomScale = 1.0;
+    }
+
   }
 
   @override
   void initState() {
     super.initState();
+
+    controller.value = Matrix4(
+      zoomScale,0,0,0,
+      0,zoomScale,0,0,
+      0,0,zoomScale,0,
+      0,0,0,1.0,
+    );
 
     _tiles = <Widget>[];
 
@@ -72,6 +90,12 @@ class _BoxesFloorState extends State<BoxesFloor>{
       children: <Widget>[
         Positioned.fill(
             child: InteractiveViewer(
+                minScale: 1.0,
+                maxScale: 4.5,
+                onInteractionUpdate: (value){
+                  print(controller.value);
+                },
+                transformationController: controller,
                 child: wrap
             )
         ),
@@ -103,6 +127,16 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                   setState(() {
                                     _addClientBox(newClientName, damageType);
                                     widget.clients.add(ClientData(newClientName,damageType, 0, 1));
+
+                                    setState(() {
+                                      controller.value = Matrix4(
+                                        zoomScale,0,0,0,
+                                        0,zoomScale,0,0,
+                                        0,0,zoomScale,0,
+                                        0,0,0,1.0,
+                                      );
+                                    });
+
                                   });
                                 },
                               ),

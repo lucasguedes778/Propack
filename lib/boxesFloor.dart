@@ -65,6 +65,8 @@ class _BoxesFloorState extends State<BoxesFloor>{
     void _onReorder(int oldIndex, int newIndex) {
       setState(() {
         Widget row = _tiles.removeAt(oldIndex);
+        ClientData element = widget.clients.removeAt(oldIndex);
+        widget.clients.insert(newIndex,element);
         _tiles.insert(newIndex, row);
       });
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'box_info_dialog.dart';
 
 //ignore: must_be_immutable
 class ItemsBox extends StatefulWidget {
@@ -48,13 +49,7 @@ class _ItemsBoxState extends State<ItemsBox> {
               showDialog(
                   context: context,
                   builder: (context){
-                    return Dialog(
-                      child: Container(
-                        width: 300,
-                        height: 400,
-                        child: Text(widget.clientName),
-                      ),
-                    );
+                    return BoxInfoDialog(clientName: widget.clientName, reasons: widget.damageTypes);
                   }
               );
             },

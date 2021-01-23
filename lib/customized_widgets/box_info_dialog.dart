@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 //ignore: must_be_immutable
 class BoxInfoDialog extends StatefulWidget {
@@ -112,32 +113,78 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                         )
 
                       ],
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding:EdgeInsets.only(top:10,bottom:10.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Content:",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+
+                        )
+
+                      ],
                     )
                   ],
                 )
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: RaisedButton(
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                  padding: EdgeInsets.all(0),
-                  child: Container(
-                    color: Colors.blue,
-                    width: 100,
-                    height: 50,
-                    child: Center(
-                      child: Text(
-                          "OK",
-                          style: TextStyle(
-                            color: Colors.white
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    RaisedButton(
+                      padding: EdgeInsets.all(0),
+                      child: Container(
+                        color: Colors.red,
+                        width: 100,
+                        height: 50,
+                        child: Center(
+                          child: Text(
+                            "Remove",
+                            style: TextStyle(
+                                color: Colors.white
+                            ),
                           ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              )
+                    Padding(
+                      padding: EdgeInsets.only(left:10.0),
+                      child: RaisedButton(
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                        padding: EdgeInsets.all(0),
+                        child: Container(
+                          color: Colors.blue,
+                          width: 100,
+                          height: 50,
+                          child: Center(
+                            child: Text(
+                              "OK",
+                              style: TextStyle(
+                                  color: Colors.white
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                )
+              ),
           ],
         ),
       ),

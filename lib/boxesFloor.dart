@@ -41,11 +41,88 @@ class _BoxesFloorState extends State<BoxesFloor>{
                     clientName: clientName,
                     reasons: damageTypes,
                     onRemovePressed: (){
-                      print("Remove! from index $lastIndex");
-                      setState(() {
-                        _tiles.removeAt(lastIndex);
-                        widget.clients.removeAt(lastIndex);
-                        Navigator.pop(context);
+                      print("Remove! from index $lastIndex");;
+
+                      showDialog(
+                          context: context,
+                          builder: (context){
+                            return Dialog(
+                              child: Container(
+                                padding: EdgeInsets.all(20),
+                                width: 250,
+                                height: 200,
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                          "Are you sure?",
+                                          style: TextStyle(
+                                            fontSize: 22
+                                          ),
+                                      ),
+                                    ),
+                                    Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            RaisedButton(
+                                              onPressed: (){
+                                                print("Cancelando...");
+                                                Navigator.pop(context,false);
+                                              },
+                                              padding: EdgeInsets.all(0),
+                                              child: Container(
+                                                color: Colors.grey,
+                                                width: 100,
+                                                height: 50,
+                                                child: Center(
+                                                  child: Text(
+                                                    "Cancel",
+                                                    style: TextStyle(
+                                                        color: Colors.white
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            RaisedButton(
+                                              onPressed: (){
+                                                setState(() {
+                                                  _tiles.removeAt(lastIndex);
+                                                  widget.clients.removeAt(lastIndex);
+                                                  Navigator.pop(context,true);
+                                                });
+                                              },
+                                              padding: EdgeInsets.all(0),
+                                              child: Container(
+                                                color: Colors.red,
+                                                width: 100,
+                                                height: 50,
+                                                child: Center(
+                                                  child: Text(
+                                                    "Remove",
+                                                    style: TextStyle(
+                                                        color: Colors.white
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                    ),
+                                  ],
+                                )
+                              )
+                            );
+                          }
+                      ).then((value) {
+                        print("Chegou aqui! $value");
+                        if(value){
+                          Navigator.pop(context);
+                        }
                       });
                     },
                 );

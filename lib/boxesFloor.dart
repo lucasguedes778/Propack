@@ -91,6 +91,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                                       setState(() {
                                                         _tiles.removeAt(lastIndex);
                                                         widget.clients.removeAt(lastIndex);
+                                                        widget.boxesAmount.removeToFirst();
                                                         Navigator.pop(context,true);
                                                       });
                                                     }else{
@@ -103,6 +104,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                                       setState(() {
                                                         _tiles.removeAt(lastIndex);
                                                         widget.clients.removeAt(lastIndex);
+                                                        widget.boxesAmount.removeToSecond();
                                                         Navigator.pop(context,true);
                                                       });
                                                     }else{
@@ -114,6 +116,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                                     setState(() {
                                                       _tiles.removeAt(lastIndex);
                                                       widget.clients.removeAt(lastIndex);
+                                                      widget.boxesAmount.removeToThird();
                                                       Navigator.pop(context,true);
                                                     });
                                                   }

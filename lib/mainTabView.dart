@@ -8,19 +8,13 @@ import 'package:flutter/services.dart';
 //ignore: must_be_immutable
 class MainTabView extends StatelessWidget{
   
-  FloorBoxesAmount boxesAmount = new FloorBoxesAmount(1, 1, 1);
+  FloorBoxesAmount boxesAmount = new FloorBoxesAmount(0, 0, 0);
 
-  List<ClientData> clients_1st = <ClientData>[
-    ClientData("Lucas",["Fire"], 0,1),
-  ];
+  List<ClientData> clients_1st = new List<ClientData>();
 
-  List<ClientData> clients_2th = <ClientData>[
-    ClientData("Guedes",["Fire"], 0,1),
-  ];
+  List<ClientData> clients_2th = new List<ClientData>();
 
-  List<ClientData> clients_3th = <ClientData>[
-    ClientData("Silva",["Fire"], 0,1),
-  ];
+  List<ClientData> clients_3th = new List<ClientData>();
 
 
   @override

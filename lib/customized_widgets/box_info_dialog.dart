@@ -7,6 +7,7 @@ class BoxInfoDialog extends StatefulWidget {
   List<String> reasons;
   final VoidCallback onRemovePressed;
 
+
   BoxInfoDialog({Key key, this.clientName, this.reasons, @required this.onRemovePressed}) : super(key: key);
 
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'box_info_dialog.dart';
 
 //ignore: must_be_immutable
 class ItemsBox extends StatefulWidget {

@@ -20,7 +20,6 @@ class BoxesFloor extends StatefulWidget{
 
 class _BoxesFloorState extends State<BoxesFloor>{
 
-  final double _iconSize = 90;
   List<Widget> _tiles;
   double zoomScale = 4.5;
   TransformationController controller = TransformationController();
@@ -41,8 +40,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
                     clientName: clientName,
                     reasons: damageTypes,
                     onRemovePressed: (){
-                      print("Remove! from index $lastIndex");;
-
                       showDialog(
                           context: context,
                           builder: (context){
@@ -69,7 +66,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                           children: [
                                             RaisedButton(
                                               onPressed: (){
-                                                print("Cancelando...");
                                                 Navigator.pop(context,false);
                                               },
                                               padding: EdgeInsets.all(0),
@@ -119,7 +115,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
                             );
                           }
                       ).then((value) {
-                        print("Chegou aqui! $value");
                         if(value){
                           Navigator.pop(context);
                         }
@@ -163,7 +158,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
   @override
   Widget build(BuildContext context) {
-    String newClientName;
 
     void _onReorder(int oldIndex, int newIndex) {
       setState(() {

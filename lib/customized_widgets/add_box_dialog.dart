@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'damage_selector.dart';
-import 'package:flutter/services.dart';
 
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {

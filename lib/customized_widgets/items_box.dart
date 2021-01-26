@@ -6,8 +6,9 @@ class ItemsBox extends StatefulWidget {
   String clientName;
   List<String> damageTypes;
   var context;
+  final VoidCallback onDoubleTap;
 
-  ItemsBox({Key key,this.clientName, this.context, this.damageTypes}) : super(key: key);
+  ItemsBox({Key key,this.clientName, this.context, this.damageTypes, this.onDoubleTap}) : super(key: key);
 
   @override
   _ItemsBoxState createState() => _ItemsBoxState();
@@ -46,12 +47,7 @@ class _ItemsBoxState extends State<ItemsBox> {
 
           child: InkWell(
             onDoubleTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context){
-                    return BoxInfoDialog(clientName: widget.clientName, reasons: widget.damageTypes);
-                  }
-              );
+              widget.onDoubleTap();
             },
             child: Stack(
               children: [

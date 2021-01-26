@@ -4,6 +4,7 @@ import 'package:reorderables/reorderables.dart';
 import 'package:victor_hugo_app_prototype/customized_widgets/add_box_dialog.dart';
 import 'package:victor_hugo_app_prototype/generalData.dart';
 import 'customized_widgets/items_box.dart';
+import 'customized_widgets/box_info_dialog.dart';
 
 //ignore: must_be_immutable
 class BoxesFloor extends StatefulWidget{
@@ -26,7 +27,32 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
 
   _addClientBox(String clientName, List<String> damageTypes){
-    _tiles.add(ItemsBox(clientName: clientName, context: context, damageTypes: damageTypes));
+    final int lastIndex = _tiles.length;
+
+    _tiles.add(ItemsBox(
+        clientName: clientName,
+        context: context,
+        damageTypes: damageTypes,
+        onDoubleTap: (){
+          showDialog(
+              context: context,
+              builder: (context){
+                return BoxInfoDialog(
+                    clientName: clientName,
+                    reasons: damageTypes,
+                    onRemovePressed: (){
+                      print("Remove! from index $lastIndex");
+                      setState(() {
+                        _tiles.removeAt(lastIndex);
+                        widget.clients.removeAt(lastIndex);
+                        Navigator.pop(context);
+                      });
+                    },
+                );
+              }
+          );
+        }
+    ));
     if(zoomScale/1.3 >= 1.0){
       if(_tiles.length > 2){
         zoomScale = zoomScale/1.3;

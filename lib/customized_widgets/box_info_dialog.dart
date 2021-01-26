@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 class BoxInfoDialog extends StatefulWidget {
   String clientName;
   List<String> reasons;
+  final VoidCallback onRemovePressed;
 
-  BoxInfoDialog({Key key, this.clientName, this.reasons}) : super(key: key);
+  BoxInfoDialog({Key key, this.clientName, this.reasons, @required this.onRemovePressed}) : super(key: key);
 
   @override
   _BoxInfoDialogState createState() => _BoxInfoDialogState();
@@ -144,6 +145,9 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     RaisedButton(
+                      onPressed: (){
+                        widget.onRemovePressed();
+                      },
                       padding: EdgeInsets.all(0),
                       child: Container(
                         color: Colors.red,

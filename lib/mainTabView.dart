@@ -4,8 +4,43 @@ import 'package:victor_hugo_app_prototype/boxesFloor.dart';
 import 'package:victor_hugo_app_prototype/generalData.dart';
 import 'package:flutter/services.dart';
 
+class FloorBoxesAmount{
+  int floor_1;
+  int floor_2;
+  int floor_3;
+
+  FloorBoxesAmount(this.floor_1, this.floor_2, this.floor_3);
+
+  void addToFirst(){
+    this.floor_1 += 1;
+  }
+
+  void removeToFirst(){
+    this.floor_1 -= 1;
+  }
+
+  void addToSecond(){
+    this.floor_2 += 1;
+  }
+
+  void removeToSecond(){
+    this.floor_2 -= 1;
+  }
+
+  void addToThird(){
+    this.floor_3 += 1;
+  }
+
+  void removeToThird(){
+    this.floor_3 -= 1;
+  }
+
+}
+
 //ignore: must_be_immutable
 class MainTabView extends StatelessWidget{
+  
+  FloorBoxesAmount boxesAmount = new FloorBoxesAmount(0, 0, 0);
 
   List<ClientData> clients_1st = <ClientData>[
     ClientData("Lucas",["Fire"], 0,1),
@@ -21,6 +56,11 @@ class MainTabView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    boxesAmount.addToFirst();
+    boxesAmount.addToSecond();
+    boxesAmount.addToThird();
+
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

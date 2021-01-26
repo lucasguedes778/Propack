@@ -20,26 +20,32 @@ class FloorBoxesAmount{
   FloorBoxesAmount(this.floor_1, this.floor_2, this.floor_3);
 
   void addToFirst(){
+    print("floor_1: ${this.floor_1}");
     this.floor_1 += 1;
   }
 
   void removeToFirst(){
+    print("floor_1: ${this.floor_1}");
     this.floor_1 -= 1;
   }
 
   void addToSecond(){
+    print("floor_2: ${this.floor_2}");
     this.floor_2 += 1;
   }
 
   void removeToSecond(){
+    print("floor_2: ${this.floor_2}");
     this.floor_2 -= 1;
   }
 
   void addToThird(){
+    print("floor_3: ${this.floor_3}");
     this.floor_3 += 1;
   }
 
   void removeToThird(){
+    print("floor_3: ${this.floor_3}");
     this.floor_3 -= 1;
   }
 

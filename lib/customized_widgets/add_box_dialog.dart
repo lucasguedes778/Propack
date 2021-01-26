@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:victor_hugo_app_prototype/generalData.dart';
 
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
    String _newClientName = "";
    List<String> _newClientReasons = List<String>();
+   FloorBoxesAmount boxesAmount;
+   int floor;
 
    //Checkboxes variables
    var fireSelected = false, moldSelected=false,fcSelected=false,waterSelected=false;
@@ -11,7 +14,7 @@ class AddBoxDialog extends StatefulWidget {
    var dialogContext;
    Function onConfirm;
 
-  AddBoxDialog({Key key, this.dialogContext, this.onConfirm}) : super(key: key);
+  AddBoxDialog({Key key, this.dialogContext, this.onConfirm,@required this.floor, @required this.boxesAmount}) : super(key: key);
 
   @override
   _AddBoxDialogState createState() => _AddBoxDialogState();
@@ -204,7 +207,27 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                           color: Colors.blue,
                           onPressed: (){
                             if(widget._newClientName != "" && widget._newClientReasons.length != 0){
-                              widget.onConfirm(widget._newClientName, widget._newClientReasons);
+                              switch(widget.floor){
+                                case 1:{
+                                  widget.boxesAmount.addToFirst();
+                                  widget.onConfirm(widget._newClientName, widget._newClientReasons);
+                                }
+                                break;
+                                case 2:{
+                                  if(widget.boxesAmount.floor_1 > widget.boxesAmount.floor_2){
+                                    widget.boxesAmount.addToSecond();
+                                    widget.onConfirm(widget._newClientName, widget._newClientReasons);
+                                  }
+                                }
+                                break;
+                                case 3:{
+                                  if(widget.boxesAmount.floor_2 > widget.boxesAmount.floor_3){
+                                    widget.boxesAmount.addToThird();
+                                    widget.onConfirm(widget._newClientName, widget._newClientReasons);
+                                  }
+                                }
+                                break;
+                              }
                               Navigator.pop(widget.dialogContext);
                             }
                           },

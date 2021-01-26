@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 //ignore: must_be_immutable
 class MainTabView extends StatelessWidget{
   
-  FloorBoxesAmount boxesAmount = new FloorBoxesAmount(0, 0, 0);
+  FloorBoxesAmount boxesAmount = new FloorBoxesAmount(1, 1, 1);
 
   List<ClientData> clients_1st = <ClientData>[
     ClientData("Lucas",["Fire"], 0,1),
@@ -22,13 +22,9 @@ class MainTabView extends StatelessWidget{
     ClientData("Silva",["Fire"], 0,1),
   ];
 
+
   @override
   Widget build(BuildContext context){
-    boxesAmount.addToFirst();
-    boxesAmount.addToSecond();
-    boxesAmount.addToThird();
-
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -107,9 +103,9 @@ class MainTabView extends StatelessWidget{
           body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children:[
-                BoxesFloor(clients: clients_1st,floor: 1),
-                BoxesFloor(clients: clients_2th,floor: 2),
-                BoxesFloor(clients: clients_3th,floor: 3)
+                BoxesFloor(clients: clients_1st,floor: 1,boxesAmount: boxesAmount),
+                BoxesFloor(clients: clients_2th,floor: 2,boxesAmount: boxesAmount),
+                BoxesFloor(clients: clients_3th,floor: 3,boxesAmount: boxesAmount)
               ]
           ),
         )

@@ -11,8 +11,9 @@ class BoxesFloor extends StatefulWidget{
   final Offset offset;
   List<ClientData> clients;
   int floor;
+  FloorBoxesAmount boxesAmount;
 
-  BoxesFloor({Key key, this.offset, this.clients,@required this.floor}) : super(key: key);
+  BoxesFloor({Key key, this.offset,@required this.clients,@required this.floor, @required this.boxesAmount}) : super(key: key);
 
   @override
   _BoxesFloorState createState() => _BoxesFloorState();
@@ -84,11 +85,40 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                             ),
                                             RaisedButton(
                                               onPressed: (){
-                                                setState(() {
-                                                  _tiles.removeAt(lastIndex);
-                                                  widget.clients.removeAt(lastIndex);
-                                                  Navigator.pop(context,true);
-                                                });
+                                                switch(widget.floor){
+                                                  case 1:{
+                                                    if(widget.boxesAmount.floor_2 < widget.boxesAmount.floor_1){
+                                                      setState(() {
+                                                        _tiles.removeAt(lastIndex);
+                                                        widget.clients.removeAt(lastIndex);
+                                                        Navigator.pop(context,true);
+                                                      });
+                                                    }else{
+                                                      Navigator.pop(context,false);
+                                                    }
+                                                  }
+                                                  break;
+                                                  case 2:{
+                                                    if(widget.boxesAmount.floor_3 < widget.boxesAmount.floor_2){
+                                                      setState(() {
+                                                        _tiles.removeAt(lastIndex);
+                                                        widget.clients.removeAt(lastIndex);
+                                                        Navigator.pop(context,true);
+                                                      });
+                                                    }else{
+                                                      Navigator.pop(context,false);
+                                                    }
+                                                  }
+                                                  break;
+                                                  case 3:{
+                                                    setState(() {
+                                                      _tiles.removeAt(lastIndex);
+                                                      widget.clients.removeAt(lastIndex);
+                                                      Navigator.pop(context,true);
+                                                    });
+                                                  }
+                                                  break;
+                                                }
                                               },
                                               padding: EdgeInsets.all(0),
                                               child: Container(
@@ -212,6 +242,8 @@ class _BoxesFloorState extends State<BoxesFloor>{
                             var dialogContext = context;
                             return Dialog(
                               child: AddBoxDialog(
+                                boxesAmount: widget.boxesAmount,
+                                floor: widget.floor,
                                 dialogContext: dialogContext,
                                 onConfirm: (String newClientName, List<String>newClientReasons){
                                   setState(() {

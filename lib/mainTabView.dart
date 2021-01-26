@@ -7,8 +7,16 @@ import 'package:flutter/services.dart';
 //ignore: must_be_immutable
 class MainTabView extends StatelessWidget{
 
-  List<ClientData> clients = <ClientData>[
+  List<ClientData> clients_1st = <ClientData>[
+    ClientData("Lucas",["Fire"], 0,1),
+  ];
+
+  List<ClientData> clients_2th = <ClientData>[
     ClientData("Guedes",["Fire"], 0,1),
+  ];
+
+  List<ClientData> clients_3th = <ClientData>[
+    ClientData("Silva",["Fire"], 0,1),
   ];
 
   @override
@@ -91,9 +99,9 @@ class MainTabView extends StatelessWidget{
           body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children:[
-                BoxesFloor(clients: clients,),
-                Container(),
-                Container()
+                BoxesFloor(clients: clients_1st,),
+                BoxesFloor(clients: clients_2th),
+                BoxesFloor(clients: clients_3th,)
               ]
           ),
         )

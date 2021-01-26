@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
-   String _newClientName;
+   String _newClientName = "";
    List<String> _newClientReasons = List<String>();
 
    //Checkboxes variables
@@ -203,8 +203,10 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                         RaisedButton(
                           color: Colors.blue,
                           onPressed: (){
-                            widget.onConfirm(widget._newClientName, widget._newClientReasons);
-                            Navigator.pop(widget.dialogContext);
+                            if(widget._newClientName != "" && widget._newClientReasons.length != 0){
+                              widget.onConfirm(widget._newClientName, widget._newClientReasons);
+                              Navigator.pop(widget.dialogContext);
+                            }
                           },
                           padding: EdgeInsets.all(0.0),
                           child: Container(

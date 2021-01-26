@@ -10,9 +10,9 @@ import 'customized_widgets/box_info_dialog.dart';
 class BoxesFloor extends StatefulWidget{
   final Offset offset;
   List<ClientData> clients;
+  int floor;
 
-
-  BoxesFloor({Key key, this.offset, this.clients}) : super(key: key);
+  BoxesFloor({Key key, this.offset, this.clients,@required this.floor}) : super(key: key);
 
   @override
   _BoxesFloorState createState() => _BoxesFloorState();
@@ -23,7 +23,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
   List<Widget> _tiles;
   double zoomScale = 4.5;
   TransformationController controller = TransformationController();
-
 
   _addClientBox(String clientName, List<String> damageTypes){
     final int lastIndex = _tiles.length;

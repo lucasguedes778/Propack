@@ -249,6 +249,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                 floor: widget.floor,
                                 dialogContext: dialogContext,
                                 onConfirm: (String newClientName, List<String>newClientReasons){
+                                  saveShedData(widget.clients);
                                   setState(() {
                                     _addClientBox(newClientName, newClientReasons);
                                     widget.clients.add(ClientData(newClientName,newClientReasons, 0, 1));

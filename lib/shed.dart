@@ -3,26 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:victor_hugo_app_prototype/boxesFloor.dart';
 import 'package:victor_hugo_app_prototype/generalData.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 
 //ignore: must_be_immutable
 class Shed extends StatefulWidget {
 
+
   FloorBoxesAmount boxesAmount = new FloorBoxesAmount(0, 0, 0);
 
-  List<ClientData> clients_1st = new List<ClientData>();
+  Stream<int> _bids = (() async* {
+    await Future<void>.delayed(Duration(seconds: 1));
+    yield 1;
+    await Future<void>.delayed(Duration(seconds: 1));
+  })();
 
-  List<ClientData> clients_2th = new List<ClientData>();
-
-  List<ClientData> clients_3th = new List<ClientData>();
+  var clients = new List<List<ClientData>>.generate(3, (i)=> new List<ClientData>());
 
   @override
   _ShedState createState() => _ShedState();
 }
 
 class _ShedState extends State<Shed> {
-
+  int counter = 0;
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState();
 
@@ -31,9 +36,32 @@ class _ShedState extends State<Shed> {
       DeviceOrientation.portraitDown,
     ]);
 
-    readShedData().then((data){
-      print("Stored data: $data");
-    });
+    for(int i = 1; i < 4; i++){
+      readShedData(i).then((data){
+        print("Stored data: $data");
+        print(this.mounted);
+        var decoded_data = json.decode(data);
+        for(int j = 0; j < decoded_data.length; j++){
+          decoded_data[j]["reasons"] = decoded_data[j]["reasons"].cast<String>().toList();
+          setState((){
+            setState((){
+              widget.clients[i-1].add(ClientData(decoded_data[j]["name"], decoded_data[j]["reasons"],0,0));
+            });
+          });
+          // print(decoded_data[j]["name"]);
+          // print(decoded_data[j]["reasons"]);
+        }
+
+        counter += 1;
+      });
+
+    }
+    print("Finalizando!");
+
+  }
+
+  Widget firstFloor(){
+    return (counter == 3) ? BoxesFloor(clients: widget.clients[0],floor: 1,boxesAmount: widget.boxesAmount) : CircularProgressIndicator();
   }
 
   @override
@@ -111,9 +139,9 @@ class _ShedState extends State<Shed> {
           body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children:[
-                BoxesFloor(clients: widget.clients_1st,floor: 1,boxesAmount: widget.boxesAmount),
-                BoxesFloor(clients: widget.clients_2th,floor: 2,boxesAmount: widget.boxesAmount),
-                BoxesFloor(clients: widget.clients_3th,floor: 3,boxesAmount: widget.boxesAmount)
+                firstFloor(),
+                BoxesFloor(clients: widget.clients[1],floor: 2,boxesAmount: widget.boxesAmount),
+                BoxesFloor(clients: widget.clients[2],floor: 3,boxesAmount: widget.boxesAmount)
               ]
           ),
         )

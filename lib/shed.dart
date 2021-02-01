@@ -10,13 +10,6 @@ class Shed extends StatefulWidget {
 
 
   FloorBoxesAmount boxesAmount = new FloorBoxesAmount(0, 0, 0);
-
-  Stream<int> _bids = (() async* {
-    await Future<void>.delayed(Duration(seconds: 1));
-    yield 1;
-    await Future<void>.delayed(Duration(seconds: 1));
-  })();
-
   var clients = new List<List<ClientData>>.generate(3, (i)=> new List<ClientData>());
 
   @override
@@ -38,18 +31,18 @@ class _ShedState extends State<Shed> {
 
     for(int i = 1; i < 4; i++){
       readShedData(i).then((data){
-        print("Stored data: $data");
-        print(this.mounted);
-        var decoded_data = json.decode(data);
-        for(int j = 0; j < decoded_data.length; j++){
-          decoded_data[j]["reasons"] = decoded_data[j]["reasons"].cast<String>().toList();
-          setState((){
+        if(data != null){
+          print("Stored data: $data");
+          print(this.mounted);
+          var decodedData = json.decode(data);
+          for(int j = 0; j < decodedData.length; j++){
+            decodedData[j]["reasons"] = decodedData[j]["reasons"].cast<String>().toList();
             setState((){
-              widget.clients[i-1].add(ClientData(decoded_data[j]["name"], decoded_data[j]["reasons"],0,0));
+              setState((){
+                widget.clients[i-1].add(ClientData(decodedData[j]["name"], decodedData[j]["reasons"],0,0));
+              });
             });
-          });
-          // print(decoded_data[j]["name"]);
-          // print(decoded_data[j]["reasons"]);
+          }
         }
 
         counter += 1;

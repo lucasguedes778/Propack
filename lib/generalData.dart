@@ -30,7 +30,11 @@ saveShedData(List<ClientData>clients, int floor) async{
 readShedData(int floor) async{
   try{
     var file = await _getFile(floor);
-    return file.readAsString();
+    if(await file.exists()){
+      return file.readAsString();
+    }else{
+      return null;
+    }
   }catch(e){
     return null;
   }

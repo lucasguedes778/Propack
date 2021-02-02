@@ -160,6 +160,48 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
   }
 
+  isAbleToAdd(){
+    return widget.floor == 1 || widget.totalClients[widget.floor - 2].length > widget.totalClients[widget.floor - 1].length;
+  }
+
+  showAddBoxDialog(){
+    if(isAbleToAdd())
+      return () {
+        showDialog(
+            context: context,
+            builder: (context){
+              var dialogContext = context;
+              return Dialog(
+                child: AddBoxDialog(
+                  boxesAmount: widget.boxesAmount,
+                  floor: widget.floor,
+                  dialogContext: dialogContext,
+                  onConfirm: (String newClientName, List<String>newClientReasons){
+                    saveShedData(widget.clients, widget.floor);
+                    setState(() {
+                      _addClientBox(newClientName, newClientReasons);
+                      widget.clients.add(ClientData(newClientName,newClientReasons));
+
+                      setState(() {
+                        controller.value = Matrix4(
+                          zoomScale,0,0,0,
+                          0,zoomScale,0,0,
+                          0,0,zoomScale,0,
+                          0,0,0,1.0,
+                        );
+                      });
+
+                    });
+                  },
+                ),
+              );
+            }
+        );
+      };
+
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -237,38 +279,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                     icon: Icon(Icons.add_circle),
                     color: Colors.blue,
                     padding: const EdgeInsets.all(0.0),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context){
-                            var dialogContext = context;
-                            return Dialog(
-                              child: AddBoxDialog(
-                                boxesAmount: widget.boxesAmount,
-                                floor: widget.floor,
-                                dialogContext: dialogContext,
-                                onConfirm: (String newClientName, List<String>newClientReasons){
-                                  saveShedData(widget.clients, widget.floor);
-                                  setState(() {
-                                    _addClientBox(newClientName, newClientReasons);
-                                    widget.clients.add(ClientData(newClientName,newClientReasons));
-
-                                    setState(() {
-                                      controller.value = Matrix4(
-                                        zoomScale,0,0,0,
-                                        0,zoomScale,0,0,
-                                        0,0,zoomScale,0,
-                                        0,0,0,1.0,
-                                      );
-                                    });
-
-                                  });
-                                },
-                              ),
-                            );
-                          }
-                      );
-                    },
+                    onPressed: showAddBoxDialog(),
                   ),
                 ],
               )

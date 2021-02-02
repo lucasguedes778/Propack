@@ -251,7 +251,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                   saveShedData(widget.clients, widget.floor);
                                   setState(() {
                                     _addClientBox(newClientName, newClientReasons);
-                                    widget.clients.add(ClientData(newClientName,newClientReasons, 0, 1));
+                                    widget.clients.add(ClientData(newClientName,newClientReasons));
 
                                     setState(() {
                                       controller.value = Matrix4(

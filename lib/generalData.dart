@@ -44,10 +44,12 @@ readShedData(int floor) async{
 class ClientData{
   String name;
   List<String> reasons;
+  String content;
 
-  ClientData(String name, List<String>reasons){
+  ClientData(String name, List<String>reasons, String content){
     this.name = name;
     this.reasons = reasons;
+    this.content = content;
   }
 }
 

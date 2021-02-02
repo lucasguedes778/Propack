@@ -5,6 +5,7 @@ import 'package:victor_hugo_app_prototype/generalData.dart';
 class AddBoxDialog extends StatefulWidget {
    String _newClientName = "";
    List<String> _newClientReasons = List<String>();
+   String _newClientContent;
    FloorBoxesAmount boxesAmount;
    int floor;
 
@@ -183,7 +184,11 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 20),
-                              child: TextFormField(
+                              child: TextField(
+                                  onChanged: (text){
+                                    print("$text");
+                                    widget._newClientContent = text;
+                                  },
                                   keyboardType: TextInputType.multiline,
                                   maxLines: 3,
                                   decoration: InputDecoration(
@@ -229,20 +234,20 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                               switch(widget.floor){
                                 case 1:{
                                   widget.boxesAmount.addToFirst();
-                                  widget.onConfirm(widget._newClientName, widget._newClientReasons);
+                                  widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent);
                                 }
                                 break;
                                 case 2:{
                                   if(widget.boxesAmount.floor_1 > widget.boxesAmount.floor_2){
                                     widget.boxesAmount.addToSecond();
-                                    widget.onConfirm(widget._newClientName, widget._newClientReasons);
+                                    widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent);
                                   }
                                 }
                                 break;
                                 case 3:{
                                   if(widget.boxesAmount.floor_2 > widget.boxesAmount.floor_3){
                                     widget.boxesAmount.addToThird();
-                                    widget.onConfirm(widget._newClientName, widget._newClientReasons);
+                                    widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent);
                                   }
                                 }
                                 break;

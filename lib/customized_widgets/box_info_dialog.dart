@@ -5,10 +5,11 @@ import 'package:flutter/cupertino.dart';
 class BoxInfoDialog extends StatefulWidget {
   String clientName;
   List<String> reasons;
+  String boxContent;
   final VoidCallback onRemovePressed;
 
 
-  BoxInfoDialog({Key key, this.clientName, this.reasons, @required this.onRemovePressed}) : super(key: key);
+  BoxInfoDialog({Key key, this.clientName, this.reasons, this.boxContent , @required this.onRemovePressed}) : super(key: key);
 
   @override
   _BoxInfoDialogState createState() => _BoxInfoDialogState();
@@ -131,8 +132,9 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                             ),
                           ),
                         ),
-                        Row(
-
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text("${(widget.boxContent != null) ? widget.boxContent : "Unknow"}")
                         )
 
                       ],

@@ -181,9 +181,15 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                                   ),
                                 ),
                             ),
-                            TextField(
-                              decoration: InputDecoration(
-                                labelText: "Type the content that is inside the box."
+                            Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: TextFormField(
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: 3,
+                                  decoration: InputDecoration(
+                                      labelText: "Type the content that is inside the box.",
+                                      border: OutlineInputBorder()
+                                  )
                               )
                             )
                           ],

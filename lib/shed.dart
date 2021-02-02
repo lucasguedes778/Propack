@@ -7,10 +7,9 @@ import 'dart:convert';
 
 //ignore: must_be_immutable
 class Shed extends StatefulWidget {
-
-
   FloorBoxesAmount boxesAmount = new FloorBoxesAmount(0, 0, 0);
   var clients = new List<List<ClientData>>.generate(3, (i)=> new List<ClientData>());
+  var tiles = new List<List<Widget>>.generate(3, (i) => new List<Widget>());
 
   @override
   _ShedState createState() => _ShedState();
@@ -32,8 +31,8 @@ class _ShedState extends State<Shed> {
     for(int i = 1; i < 4; i++){
       readShedData(i).then((data){
         if(data != null){
-          print("Stored data: $data");
-          print(this.mounted);
+          // print("Stored data: $data");
+          // print(this.mounted);
           var decodedData = json.decode(data);
           for(int j = 0; j < decodedData.length; j++){
             decodedData[j]["reasons"] = decodedData[j]["reasons"].cast<String>().toList();
@@ -54,7 +53,7 @@ class _ShedState extends State<Shed> {
   }
 
   Widget firstFloor(){
-    return (counter == 3) ? BoxesFloor(clients: widget.clients[0],floor: 1,boxesAmount: widget.boxesAmount) : CircularProgressIndicator();
+    return (counter == 3) ? BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 1,boxesAmount: widget.boxesAmount) : CircularProgressIndicator();
   }
 
   @override
@@ -133,8 +132,8 @@ class _ShedState extends State<Shed> {
               physics: NeverScrollableScrollPhysics(),
               children:[
                 firstFloor(),
-                BoxesFloor(clients: widget.clients[1],floor: 2,boxesAmount: widget.boxesAmount),
-                BoxesFloor(clients: widget.clients[2],floor: 3,boxesAmount: widget.boxesAmount)
+                BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 2,boxesAmount: widget.boxesAmount),
+                BoxesFloor(totalClients: widget.clients,shedTiles: widget.tiles,floor: 3,boxesAmount: widget.boxesAmount)
               ]
           ),
         )

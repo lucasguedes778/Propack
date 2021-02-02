@@ -9,26 +9,26 @@ import 'customized_widgets/box_info_dialog.dart';
 //ignore: must_be_immutable
 class BoxesFloor extends StatefulWidget{
   final Offset offset;
+  List<List<ClientData>>totalClients;
+  List<List<Widget>>shedTiles;
   List<ClientData> clients;
   int floor;
   FloorBoxesAmount boxesAmount;
 
-  BoxesFloor({Key key, this.offset,@required this.clients,@required this.floor, @required this.boxesAmount}) : super(key: key);
+  BoxesFloor({Key key, this.offset,@required this.totalClients,@required this.shedTiles,@required this.floor, @required this.boxesAmount}) : super(key: key);
 
   @override
   _BoxesFloorState createState() => _BoxesFloorState();
 }
 
 class _BoxesFloorState extends State<BoxesFloor>{
-
-  List<Widget> _tiles;
   double zoomScale = 4.5;
   TransformationController controller = TransformationController();
 
   _addClientBox(String clientName, List<String> damageTypes){
-    final int lastIndex = _tiles.length;
+    final int lastIndex = widget.shedTiles[widget.floor-1].length;
 
-    _tiles.add(ItemsBox(
+    widget.shedTiles[widget.floor-1].add(ItemsBox(
         clientName: clientName,
         context: context,
         damageTypes: damageTypes,
@@ -85,43 +85,36 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                             ),
                                             RaisedButton(
                                               onPressed: (){
-                                                switch(widget.floor){
-                                                  case 1:{
-                                                    if(widget.boxesAmount.floor_2 < widget.boxesAmount.floor_1){
-                                                      setState(() {
-                                                        _tiles.removeAt(lastIndex);
-                                                        widget.clients.removeAt(lastIndex);
-                                                        widget.boxesAmount.removeToFirst();
-                                                        Navigator.pop(context,true);
-                                                      });
-                                                    }else{
-                                                      Navigator.pop(context,false);
-                                                    }
-                                                  }
-                                                  break;
-                                                  case 2:{
-                                                    if(widget.boxesAmount.floor_3 < widget.boxesAmount.floor_2){
-                                                      setState(() {
-                                                        _tiles.removeAt(lastIndex);
-                                                        widget.clients.removeAt(lastIndex);
-                                                        widget.boxesAmount.removeToSecond();
-                                                        Navigator.pop(context,true);
-                                                      });
-                                                    }else{
-                                                      Navigator.pop(context,false);
-                                                    }
-                                                  }
-                                                  break;
-                                                  case 3:{
+                                                if(widget.floor < 3){
+                                                  if(widget.totalClients[widget.floor].length < widget.totalClients[widget.floor-1].length){
                                                     setState(() {
-                                                      _tiles.removeAt(lastIndex);
-                                                      widget.clients.removeAt(lastIndex);
-                                                      widget.boxesAmount.removeToThird();
-                                                      Navigator.pop(context,true);
+                                                      widget.shedTiles[widget.floor-1].removeAt(lastIndex);
+                                                      widget.totalClients[widget.floor-1].removeAt(lastIndex);
+                                                    });
+                                                  }else{
+                                                    setState(() {
+                                                      widget.shedTiles[widget.floor-1].removeAt(lastIndex);
+                                                      widget.totalClients[widget.floor-1].removeAt(lastIndex);
+
+                                                      var element_2 = widget.totalClients[widget.floor].removeAt(lastIndex);
+                                                      widget.totalClients[widget.floor-1].insert(lastIndex, element_2);
+                                                      _addClientBox(element_2.name, element_2.reasons);
+
+                                                      if(widget.floor == 1){
+                                                        if(widget.totalClients[widget.floor+1].length > widget.totalClients[widget.floor].length){
+                                                          var element_3 = widget.totalClients[widget.floor+1].removeAt(lastIndex);
+                                                          widget.totalClients[widget.floor].insert(lastIndex,element_3);
+                                                        }
+                                                      }
                                                     });
                                                   }
-                                                  break;
+                                                }else{
+                                                  setState(() {
+                                                    widget.shedTiles[widget.floor-1].removeAt(lastIndex);
+                                                    widget.totalClients[widget.floor-1].removeAt(lastIndex);
+                                                  });
                                                 }
+                                                Navigator.pop(context,true);
                                               },
                                               padding: EdgeInsets.all(0),
                                               child: Container(
@@ -158,7 +151,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
         }
     ));
     if(zoomScale/1.3 >= 1.0){
-      if(_tiles.length > 2){
+      if(widget.shedTiles[widget.floor-1].length > 2){
         zoomScale = zoomScale/1.3;
       }
     }else{
@@ -171,7 +164,13 @@ class _BoxesFloorState extends State<BoxesFloor>{
   void initState() {
     super.initState();
 
-    _tiles = <Widget>[];
+    widget.shedTiles[widget.floor-1] = <Widget>[];
+
+    widget.clients = widget.totalClients[widget.floor-1];
+
+    print("floor: ${widget.floor}");
+    print("Clients:");
+    print(widget.clients);
 
     for(int i = 0; i < widget.clients.length; i++){
       _addClientBox(widget.clients[i].name, widget.clients[i].reasons);
@@ -193,10 +192,10 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
     void _onReorder(int oldIndex, int newIndex) {
       setState(() {
-        Widget row = _tiles.removeAt(oldIndex);
+        Widget row = widget.shedTiles[widget.floor-1].removeAt(oldIndex);
         ClientData element = widget.clients.removeAt(oldIndex);
         widget.clients.insert(newIndex,element);
-        _tiles.insert(newIndex, row);
+        widget.shedTiles[widget.floor-1].insert(newIndex, row);
       });
     }
 
@@ -205,7 +204,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
         spacing: 2.0,
         runSpacing: 4.0,
         padding: const EdgeInsets.all(8),
-        children: _tiles,
+        children: widget.shedTiles[widget.floor-1],
         onReorder: _onReorder,
         onNoReorder: (int index) {
           //this callback is optional

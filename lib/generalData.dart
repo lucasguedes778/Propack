@@ -62,6 +62,12 @@ class FloorBoxesAmount{
 
   FloorBoxesAmount(this.floor_1, this.floor_2, this.floor_3);
 
+  void moveSecToFirst(){
+    this.floor_2-=1;
+    this.floor_1+=1;
+  }
+
+
   void addToFirst(){
     print("floor_1: ${this.floor_1}");
     this.floor_1 += 1;

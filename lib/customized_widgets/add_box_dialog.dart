@@ -172,7 +172,20 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                                 )
                               ],
                             ),
-
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  "Content:",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                            ),
+                            TextField(
+                              decoration: InputDecoration(
+                                labelText: "Type the content that is inside the box."
+                              )
+                            )
                           ],
                         ),
 

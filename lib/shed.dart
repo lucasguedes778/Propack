@@ -53,9 +53,22 @@ class _ShedState extends State<Shed> {
 
   }
 
-  Widget firstFloor(){
-    return (counter == 3) ? BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 1,boxesAmount: widget.boxesAmount) : CircularProgressIndicator();
+  Widget floor(int floor){
+    if(counter == 3)
+      return BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: floor,boxesAmount: widget.boxesAmount);
+
+    return Center(
+      child: Container(
+        width: 70,
+        height: 70,
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,9 +145,9 @@ class _ShedState extends State<Shed> {
           body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children:[
-                firstFloor(),
-                BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 2,boxesAmount: widget.boxesAmount),
-                BoxesFloor(totalClients: widget.clients,shedTiles: widget.tiles,floor: 3,boxesAmount: widget.boxesAmount)
+                floor(1),
+                floor(2),
+                floor(3)
               ]
           ),
         )

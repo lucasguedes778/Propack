@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 class ItemsBox extends StatefulWidget {
   String clientName;
   List<String> damageTypes;
+  bool isPallet;
   var context;
   final VoidCallback onDoubleTap;
 
-  ItemsBox({Key key,this.clientName, this.context, this.damageTypes, this.onDoubleTap}) : super(key: key);
+  ItemsBox({Key key,this.clientName,this.isPallet, this.context, this.damageTypes, this.onDoubleTap}) : super(key: key);
 
   @override
   _ItemsBoxState createState() => _ItemsBoxState();
@@ -39,6 +40,13 @@ class _ItemsBoxState extends State<ItemsBox> {
         children: indicators);
   }
 
+  Widget palletIndicator(){
+    if(widget.isPallet != null && widget.isPallet)
+      return Icon(Icons.circle,size: 4,color: Colors.brown);
+
+    return Icon(Icons.circle,size: 4,color: Colors.transparent);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,7 +70,12 @@ class _ItemsBoxState extends State<ItemsBox> {
                 ),
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: getDamageIndicators(),
+                  child: Row(
+                    children: [
+                      getDamageIndicators(),
+                      palletIndicator()
+                    ],
+                  ),
                   ),
 
               ],

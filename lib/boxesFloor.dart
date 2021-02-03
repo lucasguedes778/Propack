@@ -25,13 +25,16 @@ class _BoxesFloorState extends State<BoxesFloor>{
   double zoomScale = 4.5;
   TransformationController controller = TransformationController();
 
-  _addClientBox(String clientName, List<String> damageTypes, String boxContent){
+  _addClientBox(String clientName, List<String> damageTypes, String boxContent, bool isPallet){
     final int lastIndex = widget.shedTiles[widget.floor-1].length;
+
+    print("hmmm ${widget.shedTiles[widget.floor-1]}");
 
     widget.shedTiles[widget.floor-1].add(ItemsBox(
         clientName: clientName,
         context: context,
         damageTypes: damageTypes,
+        isPallet: isPallet,
         onDoubleTap: (){
           showDialog(
               context: context,
@@ -99,7 +102,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
                                                       var element_2 = widget.totalClients[widget.floor].removeAt(lastIndex);
                                                       widget.totalClients[widget.floor-1].insert(lastIndex, element_2);
-                                                      _addClientBox(element_2.name, element_2.reasons, element_2.content);
+                                                      _addClientBox(element_2.name, element_2.reasons, element_2.content, element_2.isPallet);
 
                                                       if(widget.floor == 1){
                                                         if(widget.totalClients[widget.floor+1].length > widget.totalClients[widget.floor].length){
@@ -177,11 +180,11 @@ class _BoxesFloorState extends State<BoxesFloor>{
                   boxesAmount: widget.boxesAmount,
                   floor: widget.floor,
                   dialogContext: dialogContext,
-                  onConfirm: (String newClientName, List<String>newClientReasons, String newClientContent){
-                    saveShedData(widget.clients, widget.floor);
+                  onConfirm: (String newClientName, List<String>newClientReasons, String newClientContent, bool isPallet){
+                    saveShedData(widget.totalClients[widget.floor-1], widget.floor);
                     setState(() {
-                      _addClientBox(newClientName, newClientReasons, newClientContent);
-                      widget.clients.add(ClientData(newClientName,newClientReasons,newClientContent));
+                      _addClientBox(newClientName, newClientReasons, newClientContent,isPallet);
+                      widget.totalClients[widget.floor-1].add(ClientData(newClientName,newClientReasons,newClientContent, isPallet));
 
                       setState(() {
                         controller.value = Matrix4(
@@ -211,12 +214,12 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
     widget.clients = widget.totalClients[widget.floor-1];
 
-    print("floor: ${widget.floor}");
-    print("Clients:");
-    print(widget.clients);
+    // print("floor: ${widget.floor}");
+    // print("Clients:");
+    // print(widget.clients);
 
-    for(int i = 0; i < widget.clients.length; i++){
-      _addClientBox(widget.clients[i].name, widget.clients[i].reasons,widget.clients[i].content);
+    for(int i = 0; i < widget.totalClients[widget.floor-1].length; i++){
+      _addClientBox(widget.totalClients[widget.floor-1][i].name, widget.totalClients[widget.floor-1][i].reasons,widget.totalClients[widget.floor-1][i].content,widget.totalClients[widget.floor-1][i].isPallet);
     }
 
     controller.value = Matrix4(
@@ -236,8 +239,8 @@ class _BoxesFloorState extends State<BoxesFloor>{
     void _onReorder(int oldIndex, int newIndex) {
       setState(() {
         Widget row = widget.shedTiles[widget.floor-1].removeAt(oldIndex);
-        ClientData element = widget.clients.removeAt(oldIndex);
-        widget.clients.insert(newIndex,element);
+        ClientData element = widget.totalClients[widget.floor-1].removeAt(oldIndex);
+        widget.totalClients[widget.floor-1].insert(newIndex,element);
         widget.shedTiles[widget.floor-1].insert(newIndex, row);
       });
     }

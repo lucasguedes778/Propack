@@ -6,6 +6,7 @@ class AddBoxDialog extends StatefulWidget {
    String _newClientName = "";
    List<String> _newClientReasons = List<String>();
    String _newClientContent;
+   bool isPallet = false;
    FloorBoxesAmount boxesAmount;
    int floor;
 
@@ -22,7 +23,6 @@ class AddBoxDialog extends StatefulWidget {
 }
 
 class _AddBoxDialogState extends State<AddBoxDialog> {
-  bool isPallet = false;
 
   @override
   Widget build(BuildContext context) {
@@ -205,10 +205,10 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                                     Switch(
                                       onChanged: (value){
                                         setState(() {
-                                          isPallet = value;
+                                          widget.isPallet = value;
                                         });
                                       },
-                                      value: isPallet,
+                                      value: widget.isPallet,
                                     ),
                                     Text("Is a pallet",),
 
@@ -252,20 +252,20 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                               switch(widget.floor){
                                 case 1:{
                                   widget.boxesAmount.addToFirst();
-                                  widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent);
+                                  widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent, widget.isPallet);
                                 }
                                 break;
                                 case 2:{
                                   if(widget.boxesAmount.floor_1 > widget.boxesAmount.floor_2){
                                     widget.boxesAmount.addToSecond();
-                                    widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent);
+                                    widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent, widget.isPallet);
                                   }
                                 }
                                 break;
                                 case 3:{
                                   if(widget.boxesAmount.floor_2 > widget.boxesAmount.floor_3){
                                     widget.boxesAmount.addToThird();
-                                    widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent);
+                                    widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent,widget.isPallet);
                                   }
                                 }
                                 break;

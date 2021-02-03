@@ -45,8 +45,9 @@ class ClientData{
   String name;
   List<String> reasons;
   String content;
+  bool isPallet;
 
-  ClientData(String name, List<String>reasons, String content){
+  ClientData(String name, List<String>reasons, String content, bool isPallet){
     this.name = name;
     this.reasons = reasons;
     this.content = content;

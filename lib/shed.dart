@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:victor_hugo_app_prototype/boxesFloor.dart';
-import 'package:victor_hugo_app_prototype/generalData.dart';
+import 'boxesFloor.dart';
+import 'generalData.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 

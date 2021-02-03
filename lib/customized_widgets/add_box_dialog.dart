@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:victor_hugo_app_prototype/generalData.dart';
+import '../generalData.dart';
 
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderables/reorderables.dart';
-import 'package:victor_hugo_app_prototype/customized_widgets/add_box_dialog.dart';
-import 'package:victor_hugo_app_prototype/generalData.dart';
+import 'customized_widgets/add_box_dialog.dart';
+import 'generalData.dart';
 import 'customized_widgets/items_box.dart';
 import 'customized_widgets/box_info_dialog.dart';
 

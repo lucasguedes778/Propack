@@ -22,12 +22,13 @@ class AddBoxDialog extends StatefulWidget {
 }
 
 class _AddBoxDialogState extends State<AddBoxDialog> {
+  bool isPallet = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      height: 400,
+      height: 450,
       child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Container(
@@ -196,6 +197,23 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                                       border: OutlineInputBorder()
                                   )
                               )
+                            ),
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: Row(
+                                  children: [
+                                    Switch(
+                                      onChanged: (value){
+                                        setState(() {
+                                          isPallet = value;
+                                        });
+                                      },
+                                      value: isPallet,
+                                    ),
+                                    Text("Is a pallet",),
+
+                                  ],
+                                )
                             )
                           ],
                         ),
@@ -271,7 +289,8 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+
                 ],
               )
           )

@@ -36,6 +36,7 @@ class _ShedState extends State<Shed> {
           var decodedData = json.decode(data);
           for(int j = 0; j < decodedData.length; j++){
             decodedData[j]["reasons"] = decodedData[j]["reasons"].cast<String>().toList();
+            print("${decodedData[j]}");
             setState((){
               setState((){
                 widget.clients[i-1].add(ClientData(decodedData[j]["name"], decodedData[j]["reasons"], decodedData[j]["content"],decodedData[j]["isPallet"]));

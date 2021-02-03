@@ -17,6 +17,8 @@ saveShedData(List<ClientData>clients, int floor) async{
     Map<String, dynamic> element = Map();
     element["name"] = clients[i].name;
     element["reasons"] = clients[i].reasons;
+    print("salvando: ${clients[i].isPallet}");
+    element["isPallet"] = clients[i].isPallet;
 
     formattedData.add(element);
   }
@@ -51,6 +53,7 @@ class ClientData{
     this.name = name;
     this.reasons = reasons;
     this.content = content;
+    this.isPallet = isPallet;
   }
 }
 

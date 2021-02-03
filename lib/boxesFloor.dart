@@ -183,7 +183,8 @@ class _BoxesFloorState extends State<BoxesFloor>{
                   onConfirm: (String newClientName, List<String>newClientReasons, String newClientContent, bool isPallet){
                     saveShedData(widget.totalClients[widget.floor-1], widget.floor);
                     setState(() {
-                      _addClientBox(newClientName, newClientReasons, newClientContent,isPallet);
+                      print("isPallet: $isPallet");
+                      _addClientBox(newClientName, newClientReasons, newClientContent, isPallet);
                       widget.totalClients[widget.floor-1].add(ClientData(newClientName,newClientReasons,newClientContent, isPallet));
 
                       setState(() {

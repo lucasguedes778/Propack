@@ -27,9 +27,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
 
   _addClientBox(String clientName, List<String> damageTypes, String boxContent, bool isPallet){
     final int lastIndex = widget.shedTiles[widget.floor-1].length;
-
-    print("hmmm ${widget.shedTiles[widget.floor-1]}");
-
     widget.shedTiles[widget.floor-1].add(ItemsBox(
         clientName: clientName,
         context: context,
@@ -117,6 +114,9 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                                     widget.shedTiles[widget.floor-1].removeAt(lastIndex);
                                                     widget.totalClients[widget.floor-1].removeAt(lastIndex);
                                                   });
+                                                }
+                                                for(int i = widget.floor; i < 4; i++){
+                                                  saveShedData(widget.totalClients[i-1], i);
                                                 }
                                                 Navigator.pop(context,true);
                                               },

@@ -122,7 +122,8 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                         Padding(
                           padding:EdgeInsets.only(top:10,bottom:10.0),
                           child: Align(
-                            alignment: Alignment.topLeft,
+                            alignment: Alignment.
+                            topLeft,
                             child: Text(
                               "Content:",
                               style: TextStyle(

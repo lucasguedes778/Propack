@@ -72,44 +72,44 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
         height: 400,
         child: Stack(
           children: [
-              Align(
+            Align(
                 alignment: Alignment.topLeft,
                 child: Column(
                   children: [
                     Padding(
-                        padding: EdgeInsets.only(bottom:10),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Name:",
+                      padding: EdgeInsets.only(bottom:10),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Name:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            " ${widget.clientName}",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding:EdgeInsets.only(bottom:10.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Reasons:",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
                             ),
-                            Text(
-                              " ${widget.clientName}",
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            )
-                          ],
-                        ),
-                    ),
-                    Column(
-                      children: [
-                        Padding(
-                            padding:EdgeInsets.only(bottom:10.0),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                "Reasons:",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
+                          ),
                         ),
                         Row(
                           children: getReasons(),
@@ -134,16 +134,16 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                           ),
                         ),
                         Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("${(widget.boxContent != null) ? widget.boxContent : "Unknow"}")
+                            alignment: Alignment.topLeft,
+                            child: Text("${(widget.boxContent != null) ? widget.boxContent : "Unknow"}")
                         )
 
                       ],
                     )
                   ],
                 )
-              ),
-              Align(
+            ),
+            Align(
                 alignment: Alignment.bottomCenter,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -192,7 +192,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
 
                   ],
                 )
-              ),
+            ),
           ],
         ),
       ),

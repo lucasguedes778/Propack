@@ -3,6 +3,7 @@ import '../generalData.dart';
 
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
+   List<List<ClientData>> totalClients;
    String _newClientName = "";
    List<String> _newClientReasons = List<String>();
    String _newClientContent;
@@ -16,7 +17,7 @@ class AddBoxDialog extends StatefulWidget {
    var dialogContext;
    Function onConfirm;
 
-  AddBoxDialog({Key key, this.dialogContext, this.onConfirm,@required this.floor, @required this.boxesAmount}) : super(key: key);
+  AddBoxDialog({Key key,this.totalClients, this.dialogContext, this.onConfirm,@required this.floor, @required this.boxesAmount}) : super(key: key);
 
   @override
   _AddBoxDialogState createState() => _AddBoxDialogState();
@@ -251,20 +252,17 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
                             if(widget._newClientName != "" && widget._newClientReasons.length != 0){
                               switch(widget.floor){
                                 case 1:{
-                                  widget.boxesAmount.addToFirst();
                                   widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent, widget.isPallet);
                                 }
                                 break;
                                 case 2:{
-                                  if(widget.boxesAmount.floor_1 > widget.boxesAmount.floor_2){
-                                    widget.boxesAmount.addToSecond();
+                                  if(widget.totalClients[widget.floor-2].length > widget.totalClients[widget.floor-1].length){
                                     widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent, widget.isPallet);
                                   }
                                 }
                                 break;
                                 case 3:{
-                                  if(widget.boxesAmount.floor_2 > widget.boxesAmount.floor_3){
-                                    widget.boxesAmount.addToThird();
+                                  if(widget.totalClients[widget.floor-2].length > widget.totalClients[widget.floor-1].length){
                                     widget.onConfirm(widget._newClientName, widget._newClientReasons, widget._newClientContent,widget.isPallet);
                                   }
                                 }

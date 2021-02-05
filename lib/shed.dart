@@ -4,6 +4,7 @@ import 'boxesFloor.dart';
 import 'generalData.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'package:async/async.dart';
 
 //ignore: must_be_immutable
 class Shed extends StatefulWidget {
@@ -17,6 +18,7 @@ class Shed extends StatefulWidget {
 
 class _ShedState extends State<Shed> {
   int counter = 0;
+  final AsyncMemoizer _memoizer = AsyncMemoizer();
   @override
   void initState() {
 
@@ -27,29 +29,6 @@ class _ShedState extends State<Shed> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-
-    for(int i = 1; i < 4; i++){
-      readShedData(i).then((data){
-        if(data != null){
-          // print("Stored data: $data");
-          // print(this.mounted);
-          var decodedData = json.decode(data);
-          for(int j = 0; j < decodedData.length; j++){
-            decodedData[j]["reasons"] = decodedData[j]["reasons"].cast<String>().toList();
-            print("${decodedData[j]}");
-            setState((){
-              setState((){
-                widget.clients[i-1].add(ClientData(decodedData[j]["name"], decodedData[j]["reasons"], decodedData[j]["content"],decodedData[j]["isPallet"]));
-              });
-            });
-          }
-        }
-
-        counter += 1;
-      });
-
-    }
-    print("Finalizando!");
 
   }
 
@@ -66,7 +45,30 @@ class _ShedState extends State<Shed> {
     );
   }
 
+  _fetchData() {
+    return this._memoizer.runOnce(() async {
+      for(int i = 1; i < 4; i++){
+        await readShedData(i).then((data){
+          if(data != null){
+            print("Stored data: $data");
+            var decodedData = json.decode(data);
+            for(int j = 0; j < decodedData.length; j++){
+              decodedData[j]["reasons"] = decodedData[j]["reasons"].cast<String>().toList();
+              print("${decodedData[j]}");
+              setState((){
+                setState((){
+                  widget.clients[i-1].add(ClientData(decodedData[j]["name"], decodedData[j]["reasons"], decodedData[j]["content"],decodedData[j]["isPallet"]));
+                });
+              });
+            }
+          }
+        });
+      }
 
+      return 'completed';
+
+    });
+  }
 
 
 
@@ -145,9 +147,42 @@ class _ShedState extends State<Shed> {
           body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children:[
-                floor(1),
-                floor(2),
-                floor(3)
+                FutureBuilder(
+                    future: this._fetchData(),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        return BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 1,boxesAmount: widget.boxesAmount);
+                      }
+                      return Container(
+                        child: Center(
+                          child: CircularProgressIndicator()
+                        )
+                      );
+                    }),
+                  FutureBuilder(
+                      future: this._fetchData(),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          return BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 2,boxesAmount: widget.boxesAmount);
+                        }
+                        return Container(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            )
+                        );
+                      }),
+                  FutureBuilder(
+                      future: this._fetchData(),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          return BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 3,boxesAmount: widget.boxesAmount);
+                        }
+                        return Container(
+                            child: Center(
+                                child: CircularProgressIndicator()
+                            )
+                        );
+                      }),
               ]
           ),
         )

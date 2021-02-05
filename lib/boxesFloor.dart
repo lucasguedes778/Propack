@@ -177,6 +177,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
               var dialogContext = context;
               return Dialog(
                 child: AddBoxDialog(
+                  totalClients: widget.totalClients,
                   boxesAmount: widget.boxesAmount,
                   floor: widget.floor,
                   dialogContext: dialogContext,

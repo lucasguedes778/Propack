@@ -73,10 +73,13 @@ class _ItemsBoxState extends State<ItemsBox> {
                   child: Row(
                     children: [
                       getDamageIndicators(),
-                      palletIndicator()
                     ],
                   ),
-                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: palletIndicator()
+                )
 
               ],
             )

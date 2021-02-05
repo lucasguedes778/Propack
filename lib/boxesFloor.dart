@@ -25,9 +25,10 @@ class _BoxesFloorState extends State<BoxesFloor>{
   double zoomScale = 4.5;
   TransformationController controller = TransformationController();
 
-  _addClientBox(String clientName, List<String> damageTypes, String boxContent, bool isPallet){
-    final int lastIndex = widget.shedTiles[widget.floor-1].length;
-    widget.shedTiles[widget.floor-1].add(ItemsBox(
+  _addClientBox(String clientName, List<String> damageTypes, String boxContent, bool isPallet, {int indice}){
+    final int lastIndex = (indice != null) ? indice : widget.shedTiles[widget.floor-1].length;
+
+    var newItem = ItemsBox(
         clientName: clientName,
         context: context,
         damageTypes: damageTypes,
@@ -37,123 +38,131 @@ class _BoxesFloorState extends State<BoxesFloor>{
               context: context,
               builder: (context){
                 return BoxInfoDialog(
-                    clientName: clientName,
-                    reasons: damageTypes,
-                    boxContent: boxContent,
-                    onRemovePressed: (){
-                      showDialog(
-                          context: context,
-                          builder: (context){
-                            return Dialog(
+                  clientName: clientName,
+                  reasons: damageTypes,
+                  boxContent: boxContent,
+                  onRemovePressed: (){
+                    showDialog(
+                        context: context,
+                        builder: (context){
+                          return Dialog(
                               child: Container(
-                                padding: EdgeInsets.all(20),
-                                width: 250,
-                                height: 200,
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
+                                  padding: EdgeInsets.all(20),
+                                  width: 250,
+                                  height: 200,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
                                           "Are you sure?",
                                           style: TextStyle(
-                                            fontSize: 22
+                                              fontSize: 22
                                           ),
+                                        ),
                                       ),
-                                    ),
-                                    Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            RaisedButton(
-                                              onPressed: (){
-                                                Navigator.pop(context,false);
-                                              },
-                                              padding: EdgeInsets.all(0),
-                                              child: Container(
-                                                color: Colors.grey,
-                                                width: 100,
-                                                height: 50,
-                                                child: Center(
-                                                  child: Text(
-                                                    "Cancel",
-                                                    style: TextStyle(
-                                                        color: Colors.white
+                                      Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              RaisedButton(
+                                                onPressed: (){
+                                                  Navigator.pop(context,false);
+                                                },
+                                                padding: EdgeInsets.all(0),
+                                                child: Container(
+                                                  color: Colors.grey,
+                                                  width: 100,
+                                                  height: 50,
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Cancel",
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            RaisedButton(
-                                              onPressed: (){
-                                                if(widget.floor < 3){
-                                                  if(widget.totalClients[widget.floor].length < widget.totalClients[widget.floor-1].length){
-                                                    setState(() {
-                                                      widget.shedTiles[widget.floor-1].removeAt(lastIndex);
-                                                      widget.totalClients[widget.floor-1].removeAt(lastIndex);
-                                                    });
+                                              RaisedButton(
+                                                onPressed: (){
+                                                  if(widget.floor < 3){
+                                                    if(widget.totalClients[widget.floor].length < widget.totalClients[widget.floor-1].length){
+                                                      setState(() {
+                                                        widget.shedTiles[widget.floor-1].removeAt(lastIndex);
+                                                        widget.totalClients[widget.floor-1].removeAt(lastIndex);
+                                                      });
+                                                    }else{
+                                                      setState(() {
+                                                        print("lastIndex: $lastIndex");
+                                                        widget.shedTiles[widget.floor-1].removeAt(lastIndex);
+                                                        widget.totalClients[widget.floor-1].removeAt(lastIndex);
+
+                                                        var element_2 = widget.totalClients[widget.floor].removeAt(lastIndex);
+                                                        widget.totalClients[widget.floor-1].insert(lastIndex, element_2);
+                                                        _addClientBox(element_2.name, element_2.reasons, element_2.content, element_2.isPallet, indice: lastIndex);
+
+                                                        if(widget.floor == 1){
+                                                          if(widget.totalClients[widget.floor+1].length > widget.totalClients[widget.floor].length){
+                                                            var element_3 = widget.totalClients[widget.floor+1].removeAt(lastIndex);
+                                                            widget.totalClients[widget.floor].insert(lastIndex,element_3);
+                                                          }
+                                                        }
+                                                      });
+                                                    }
                                                   }else{
                                                     setState(() {
                                                       widget.shedTiles[widget.floor-1].removeAt(lastIndex);
                                                       widget.totalClients[widget.floor-1].removeAt(lastIndex);
-
-                                                      var element_2 = widget.totalClients[widget.floor].removeAt(lastIndex);
-                                                      widget.totalClients[widget.floor-1].insert(lastIndex, element_2);
-                                                      _addClientBox(element_2.name, element_2.reasons, element_2.content, element_2.isPallet);
-
-                                                      if(widget.floor == 1){
-                                                        if(widget.totalClients[widget.floor+1].length > widget.totalClients[widget.floor].length){
-                                                          var element_3 = widget.totalClients[widget.floor+1].removeAt(lastIndex);
-                                                          widget.totalClients[widget.floor].insert(lastIndex,element_3);
-                                                        }
-                                                      }
                                                     });
                                                   }
-                                                }else{
-                                                  setState(() {
-                                                    widget.shedTiles[widget.floor-1].removeAt(lastIndex);
-                                                    widget.totalClients[widget.floor-1].removeAt(lastIndex);
-                                                  });
-                                                }
-                                                for(int i = widget.floor; i < 4; i++){
-                                                  saveShedData(widget.totalClients[i-1], i);
-                                                }
-                                                Navigator.pop(context,true);
-                                              },
-                                              padding: EdgeInsets.all(0),
-                                              child: Container(
-                                                color: Colors.red,
-                                                width: 100,
-                                                height: 50,
-                                                child: Center(
-                                                  child: Text(
-                                                    "Remove",
-                                                    style: TextStyle(
-                                                        color: Colors.white
+                                                  for(int i = widget.floor; i < 4; i++){
+                                                    saveShedData(widget.totalClients[i-1], i);
+                                                  }
+                                                  Navigator.pop(context,true);
+                                                },
+                                                padding: EdgeInsets.all(0),
+                                                child: Container(
+                                                  color: Colors.red,
+                                                  width: 100,
+                                                  height: 50,
+                                                  child: Center(
+                                                    child: Text(
+                                                      "Remove",
+                                                      style: TextStyle(
+                                                          color: Colors.white
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        )
-                                    ),
-                                  ],
-                                )
+                                            ],
+                                          )
+                                      ),
+                                    ],
+                                  )
                               )
-                            );
-                          }
-                      ).then((value) {
-                        if(value){
-                          Navigator.pop(context);
+                          );
                         }
-                      });
-                    },
+                    ).then((value) {
+                      if(value){
+                        Navigator.pop(context);
+                      }
+                    });
+                  },
                 );
               }
           );
         }
-    ));
+    );
+
+    if(indice == null){
+      widget.shedTiles[widget.floor-1].add(newItem);
+    }else{
+      widget.shedTiles[widget.floor-1].insert(indice,newItem);
+    }
+
     if(zoomScale/1.3 >= 1.0){
       if(widget.shedTiles[widget.floor-1].length > 2){
         zoomScale = zoomScale/1.3;

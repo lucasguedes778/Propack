@@ -24,6 +24,7 @@ class _ItemsBoxState extends State<ItemsBox> {
       indicators.add(Icon(Icons.circle,size: 4,color: Colors.deepOrange));
     }
 
+
     if(widget.damageTypes.contains("Water")){
       indicators.add(Icon(Icons.circle,size: 4,color: Colors.blue));
     }

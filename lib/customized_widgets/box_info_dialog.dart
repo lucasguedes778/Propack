@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 //ignore: must_be_immutable
 class BoxInfoDialog extends StatefulWidget {
@@ -142,6 +143,24 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                     )
                   ],
                 )
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                padding: EdgeInsets.all(3),
+                child: InkWell(
+                  onTap: (){
+                    print("Editando...");
+                  },
+                  child: Text(
+                      "EDIT",
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        decoration: TextDecoration.underline,
+                      )
+                ),
+                )
+              )
             ),
             Align(
                 alignment: Alignment.bottomCenter,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../generalData.dart';
+import '../customized_widgets/reasonsSelector.dart';
 
 //ignore: must_be_immutable
 class AddBoxDialog extends StatefulWidget {
@@ -103,114 +104,7 @@ class _AddBoxDialogState extends State<AddBoxDialog> {
 
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: Row(
-                                        children: [
-                                          Checkbox(
-                                              value: widget.fireSelected,
-                                              onChanged: (value){
-                                                setState(() {
-                                                  widget.fireSelected = value;
-                                                });
-                                                if(value == true){
-                                                  widget._newClientReasons.add("Fire");
-                                                }else{
-                                                  widget._newClientReasons.remove("Fire");
-                                                }
-                                              }
-                                          ),
-                                          Text(
-                                            "Fire",
-                                            style: TextStyle(
-                                                fontSize: 12
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                  ),
-                                  Expanded(
-                                      child: Row(
-                                        children: [
-                                          Checkbox(
-                                              value: widget.waterSelected,
-                                              onChanged: (value){
-                                                setState(() {
-                                                  widget.waterSelected = value;
-                                                });
-                                                if(value == true){
-                                                  widget._newClientReasons.add("Water");
-                                                }else{
-                                                  widget._newClientReasons.remove("Water");
-                                                }
-                                              }
-                                          ),
-                                          Text(
-                                            "Water",
-                                            style: TextStyle(
-                                                fontSize: 12
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: Row(
-                                        children: [
-                                          Checkbox(
-                                              value: widget.moldSelected,
-                                              onChanged: (value){
-                                                setState(() {
-                                                  widget.moldSelected = value;
-                                                });
-                                                if(value == true){
-                                                  widget._newClientReasons.add("Mold");
-                                                }else{
-                                                  widget._newClientReasons.remove("Mold");
-                                                }
-                                              }
-                                          ),
-                                          Text(
-                                            "Mold",
-                                            style: TextStyle(
-                                                fontSize: 12
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                  ),
-                                  Expanded(
-                                      child: Row(
-                                        children: [
-                                          Checkbox(
-                                              value: widget.fcSelected,
-                                              onChanged: (value){
-                                                setState(() {
-                                                  widget.fcSelected = value;
-                                                });
-                                                if(value == true){
-                                                  widget._newClientReasons.add("Floor change");
-                                                }else{
-                                                  widget._newClientReasons.remove("Floor change");
-                                                }
-                                              }
-                                          ),
-                                          Text(
-                                            "Floor change",
-                                            style: TextStyle(
-                                                fontSize: 12
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                  )
-                                ],
-                              ),
+                              ReasonsSelector(reasons: widget._newClientReasons),
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(

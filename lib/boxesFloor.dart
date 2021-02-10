@@ -28,6 +28,8 @@ class _BoxesFloorState extends State<BoxesFloor>{
   _addClientBox(String clientName, List<String> damageTypes, String boxContent, bool isPallet, {int indice}){
     final int lastIndex = (indice != null) ? indice : widget.shedTiles[widget.floor-1].length;
 
+    ClientData newClient = new ClientData(clientName, damageTypes, boxContent, isPallet);
+
     var newItem = ItemsBox(
         clientName: clientName,
         context: context,
@@ -38,9 +40,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
               context: context,
               builder: (context){
                 return BoxInfoDialog(
-                  clientName: clientName,
-                  reasons: damageTypes,
-                  boxContent: boxContent,
+                  client: newClient,
                   onRemovePressed: (){
                     showDialog(
                         context: context,

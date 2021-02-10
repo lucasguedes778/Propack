@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import '../generalData.dart';
 
 //ignore: must_be_immutable
 class BoxInfoDialog extends StatefulWidget {
-  String clientName;
-  List<String> reasons;
-  String boxContent;
+  ClientData client;
   final VoidCallback onRemovePressed;
 
 
-  BoxInfoDialog({Key key, this.clientName, this.reasons, this.boxContent , @required this.onRemovePressed}) : super(key: key);
+  BoxInfoDialog({Key key, this.client , @required this.onRemovePressed}) : super(key: key);
 
   @override
   _BoxInfoDialogState createState() => _BoxInfoDialogState();
@@ -21,10 +20,10 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
   List<Padding> getReasons(){
     List<Padding> reasons = List<Padding>();
 
-    for(int i = 0; i < widget.reasons.length; i++){
+    for(int i = 0; i < widget.client.reasons.length; i++){
       var iconColor;
 
-      switch(widget.reasons[i]){
+      switch(widget.client.reasons[i]){
         case "Fire":{
           iconColor = Colors.deepOrange;
         }
@@ -49,7 +48,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
           children: [
             Icon(Icons.circle,size: 15, color:iconColor),
             Text(
-              " ${widget.reasons[i]}",
+              " ${widget.client.reasons[i]}",
               style: TextStyle(
                 fontSize: 9
               ),
@@ -89,7 +88,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                             ),
                           ),
                           Text(
-                            " ${widget.clientName}",
+                            " ${widget.client.name}",
                             style: TextStyle(
                               fontSize: 16,
                             ),
@@ -136,7 +135,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                         ),
                         Align(
                             alignment: Alignment.topLeft,
-                            child: Text("${(widget.boxContent != null) ? widget.boxContent : "Unknow"}")
+                            child: Text("${(widget.client.content != null) ? widget.client.content : "Unknow"}")
                         )
 
                       ],

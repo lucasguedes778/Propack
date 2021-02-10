@@ -72,7 +72,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
       child: Container(
         padding: EdgeInsets.all(20),
         width: 300,
-        height: 450,
+        height: 500,
         child: Stack(
           children: [
             SingleChildScrollView(
@@ -167,7 +167,27 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                                           border: OutlineInputBorder()
                                       )
                                   )
-                              )
+                              ),
+                              (widget.editMode == true) ? Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Row(
+                                      children: [
+                                        Switch(
+                                          onChanged: (value){
+                                            setState(() {
+                                              widget.client.isPallet = value;
+                                            });
+                                          },
+                                          value: widget.client.isPallet,
+                                        ),
+                                        Text("Is a pallet",),
+
+                                      ],
+                                    )
+                                ),
+                              ) : Container(),
 
                             ],
                           )
@@ -253,6 +273,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                   ),
                 )
             ),
+
           ],
         ),
       ),

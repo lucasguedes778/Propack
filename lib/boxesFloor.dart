@@ -40,7 +40,9 @@ class _BoxesFloorState extends State<BoxesFloor>{
               context: context,
               builder: (context){
                 return BoxInfoDialog(
-                  client: newClient,
+                  clients: widget.totalClients,
+                  clientIndex: lastIndex,
+                  floor: widget.floor,
                   onRemovePressed: (){
                     showDialog(
                         context: context,
@@ -154,6 +156,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                 );
               }
           );
+
         }
     );
 

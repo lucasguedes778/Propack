@@ -7,12 +7,13 @@ import '../generalData.dart';
 
 //ignore: must_be_immutable
 class BoxInfoDialog extends StatefulWidget {
-  ClientData client;
+  List<List<ClientData>> clients;
+  int clientIndex;
   int floor;
   final VoidCallback onRemovePressed;
   bool editMode = false;
 
-  BoxInfoDialog({Key key, this.client, @required this.floor , @required this.onRemovePressed}) : super(key: key);
+  BoxInfoDialog({Key key, this.clients, this.clientIndex, @required this.floor , @required this.onRemovePressed}) : super(key: key);
 
   @override
   _BoxInfoDialogState createState() => _BoxInfoDialogState();
@@ -23,10 +24,10 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
   List<Padding> getReasons(){
     List<Padding> reasons = List<Padding>();
 
-    for(int i = 0; i < widget.client.reasons.length; i++){
+    for(int i = 0; i < widget.clients[widget.floor-1][widget.clientIndex].reasons.length; i++){
       var iconColor;
 
-      switch(widget.client.reasons[i]){
+      switch(widget.clients[widget.floor-1][widget.clientIndex].reasons[i]){
         case "Fire":{
           iconColor = Colors.deepOrange;
         }
@@ -51,7 +52,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
           children: [
             Icon(Icons.circle,size: 15, color:iconColor),
             Text(
-              " ${widget.client.reasons[i]}",
+              " ${widget.clients[widget.floor-1][widget.clientIndex].reasons[i]}",
               style: TextStyle(
                 fontSize: 9
               ),
@@ -87,22 +88,22 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                             child: Row(
                               children: [
                                 Text(
-                                  "Name:",
+                                  "Name: ",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                   ),
                                 ),
                                 (widget.editMode == null || widget.editMode == false) ? Text(
-                                  " ${widget.client.name}",
+                                  " ${widget.clients[widget.floor-1][widget.clientIndex].name}",
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
                                 ) : Expanded(
                                   child: TextField(
-                                    controller: TextEditingController()..text = " ${widget.client.name}",
+                                    controller: TextEditingController()..text = "${widget.clients[widget.floor-1][widget.clientIndex].name}",
                                     onChanged: (text){
-
+                                      widget.clients[widget.floor-1][widget.clientIndex].name = text;
                                     },
                                     style: TextStyle(
                                         color: Colors.black
@@ -135,7 +136,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                               ),
                               (widget.editMode == null || widget.editMode == false ) ? Row(
                                 children:  getReasons(),
-                              ) : ReasonsSelector(reasons: widget.client.reasons)
+                              ) : ReasonsSelector(reasons: widget.clients[widget.floor-1][widget.clientIndex].reasons)
 
                             ],
                           ),
@@ -156,9 +157,10 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                               ),
                               Align(
                                   alignment: Alignment.topLeft,
-                                  child: (widget.editMode == null || widget.editMode == false) ? Text("${(widget.client.content != null) ? widget.client.content : "Unknow"}") :  TextField(
-                                      controller: TextEditingController()..text = "${(widget.client.content != null) ? widget.client.content : "Unknow"}",
+                                  child: (widget.editMode == null || widget.editMode == false) ? Text("${(widget.clients[widget.floor-1][widget.clientIndex].content != null) ? widget.clients[widget.floor-1][widget.clientIndex].content : "Unknow"}") :  TextField(
+                                      controller: TextEditingController()..text = "${(widget.clients[widget.floor-1][widget.clientIndex].content != null) ? widget.clients[widget.floor-1][widget.clientIndex].content : "Unknow"}",
                                       onChanged: (text){
+                                        widget.clients[widget.floor-1][widget.clientIndex].content = text;
                                       },
                                       keyboardType: TextInputType.multiline,
                                       maxLines: 3,
@@ -177,10 +179,11 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                                         Switch(
                                           onChanged: (value){
                                             setState(() {
-                                              widget.client.isPallet = value;
+                                              widget.clients[widget.floor-1][widget.clientIndex].isPallet = value;
+                                              print("here: ${widget.clients[widget.floor-1][widget.clientIndex].isPallet}");
                                             });
                                           },
-                                          value: widget.client.isPallet,
+                                          value: widget.clients[widget.floor-1][widget.clientIndex].isPallet,
                                         ),
                                         Text("Is a pallet",),
 
@@ -204,8 +207,14 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                               setState(() {
                                 if(widget.editMode == null)
                                   widget.editMode = true;
-                                else
+                                else{
+                                  if(widget.editMode == true){
+                                    saveShedData(widget.clients[widget.floor-1], widget.floor);
+                                  }
                                   widget.editMode = !widget.editMode;
+                                }
+
+
                               });
                             },
                             child: Text(
@@ -250,6 +259,11 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                         padding: EdgeInsets.only(left:10.0),
                         child: RaisedButton(
                           onPressed: (){
+
+                            setState(() {
+                              saveShedData(widget.clients[widget.floor-1], widget.floor);
+                            });
+
                             Navigator.pop(context);
                           },
                           padding: EdgeInsets.all(0),

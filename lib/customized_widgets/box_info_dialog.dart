@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:victor_hugo_app_prototype/customized_widgets/add_box_dialog.dart';
 import '../generalData.dart';
 
 //ignore: must_be_immutable
 class BoxInfoDialog extends StatefulWidget {
   ClientData client;
+  int floor;
   final VoidCallback onRemovePressed;
+  bool editMode = false;
 
-
-  BoxInfoDialog({Key key, this.client , @required this.onRemovePressed}) : super(key: key);
+  BoxInfoDialog({Key key, this.client, @required this.floor , @required this.onRemovePressed}) : super(key: key);
 
   @override
   _BoxInfoDialogState createState() => _BoxInfoDialogState();
@@ -87,12 +89,28 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                               fontSize: 16,
                             ),
                           ),
-                          Text(
+                          (widget.editMode == null || widget.editMode == false) ? Text(
                             " ${widget.client.name}",
                             style: TextStyle(
                               fontSize: 16,
                             ),
-                          )
+                          ) : Expanded(
+                            child: TextField(
+                              controller: TextEditingController()..text = " ${widget.client.name}",
+                              onChanged: (text){
+
+                              },
+                              style: TextStyle(
+                                  color: Colors.black
+                              ),
+                              decoration: InputDecoration(
+                                // border: InputBorder.none,
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey
+                                  ),
+                                  hintText: "."
+                              ),),
+                          ),
                         ],
                       ),
                     ),
@@ -135,7 +153,17 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                         ),
                         Align(
                             alignment: Alignment.topLeft,
-                            child: Text("${(widget.client.content != null) ? widget.client.content : "Unknow"}")
+                            child: (widget.editMode == null || widget.editMode == false) ? Text("${(widget.client.content != null) ? widget.client.content : "Unknow"}") :  TextField(
+                                controller: TextEditingController()..text = "${(widget.client.content != null) ? widget.client.content : "Unknow"}",
+                                onChanged: (text){
+                                },
+                                keyboardType: TextInputType.multiline,
+                                maxLines: 3,
+                                decoration: InputDecoration(
+                                    labelText: "Type the content that is inside the box.",
+                                    border: OutlineInputBorder()
+                                )
+                            )
                         )
 
                       ],
@@ -149,7 +177,13 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                 padding: EdgeInsets.all(3),
                 child: InkWell(
                   onTap: (){
-                    print("Editando...");
+                    // Navigator.pop(context);
+                    setState(() {
+                      if(widget.editMode == null)
+                        widget.editMode = true;
+                      else
+                        widget.editMode = !widget.editMode;
+                    });
                   },
                   child: Text(
                       "EDIT",

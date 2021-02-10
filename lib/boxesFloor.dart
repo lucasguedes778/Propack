@@ -187,7 +187,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
               return Dialog(
                 child: AddBoxDialog(
                   totalClients: widget.totalClients,
-                  boxesAmount: widget.boxesAmount,
                   floor: widget.floor,
                   dialogContext: dialogContext,
                   onConfirm: (String newClientName, List<String>newClientReasons, String newClientContent, bool isPallet){
@@ -197,14 +196,12 @@ class _BoxesFloorState extends State<BoxesFloor>{
                       _addClientBox(newClientName, newClientReasons, newClientContent, isPallet);
                       widget.totalClients[widget.floor-1].add(ClientData(newClientName,newClientReasons,newClientContent, isPallet));
 
-                      setState(() {
-                        controller.value = Matrix4(
-                          zoomScale,0,0,0,
-                          0,zoomScale,0,0,
-                          0,0,zoomScale,0,
-                          0,0,0,1.0,
-                        );
-                      });
+                      controller.value = Matrix4(
+                        zoomScale,0,0,0,
+                        0,zoomScale,0,0,
+                        0,0,zoomScale,0,
+                        0,0,0,1.0,
+                      );
 
                     });
                   },

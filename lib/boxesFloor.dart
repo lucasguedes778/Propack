@@ -26,6 +26,89 @@ class _BoxesFloorState extends State<BoxesFloor>{
   double zoomScale = 4.5;
   TransformationController controller = TransformationController();
 
+  setClientBox(ClientData clientData, int index){
+    var updatedItem = ItemsBox(
+        clientName: clientData.name,
+        context: context,
+        damageTypes: clientData.reasons,
+        isPallet: clientData.isPallet,
+        onDoubleTap: (){
+          showDialog(
+              context: context,
+              builder: (context){
+                return BoxInfoDialog(
+                  clients: widget.totalClients,
+                  clientIndex: index,
+                  onClose: (){
+                    setState(() {
+                      print(widget.totalClients[widget.floor-1][index].name);
+                      setClientBox(widget.totalClients[widget.floor-1][index], index);
+                    });
+                  },
+                  floor: widget.floor,
+                  onRemovePressed: (){
+                    showDialog(
+                        context: context,
+                        builder: (context){
+                          return RemoveConfirmation(
+                              onRemovePressed: (){
+                                if(widget.floor < 3){
+                                  if(widget.totalClients[widget.floor].length < widget.totalClients[widget.floor-1].length){
+                                    setState(() {
+                                      widget.shedTiles[widget.floor-1].removeAt(index);
+                                      widget.totalClients[widget.floor-1].removeAt(index);
+                                    });
+                                  }else{
+                                    setState(() {
+                                      print("lastIndex: ${index}");
+                                      widget.shedTiles[widget.floor-1].removeAt(index);
+                                      widget.totalClients[widget.floor-1].removeAt(index);
+
+                                      var element_2 = widget.totalClients[widget.floor].removeAt(index);
+                                      widget.totalClients[widget.floor-1].insert(index, element_2);
+                                      _addClientBox(element_2.name, element_2.reasons, element_2.content, element_2.isPallet, indice: index);
+
+                                      if(widget.floor == 1){
+                                        if(widget.totalClients[widget.floor+1].length > widget.totalClients[widget.floor].length){
+                                          var element_3 = widget.totalClients[widget.floor+1].removeAt(index);
+                                          widget.totalClients[widget.floor].insert(index,element_3);
+                                        }
+                                      }
+                                    });
+                                  }
+                                }else{
+                                  setState(() {
+                                    widget.shedTiles[widget.floor-1].removeAt(index);
+                                    widget.totalClients[widget.floor-1].removeAt(index);
+                                  });
+                                }
+                                for(int i = widget.floor; i < 4; i++){
+                                  saveShedData(widget.totalClients[i-1], i);
+                                }
+                              },
+                              addBox: _addClientBox,
+                              totalClients: widget.totalClients,
+                              shedTiles: widget.shedTiles,
+                              floor: widget.floor,
+                              index: index
+                          );
+                        }
+                    ).then((value) {
+                      if(value){
+                        Navigator.pop(context);
+                      }
+                    });
+                  },
+                );
+              }
+          );
+
+        }
+    );
+
+    widget.shedTiles[widget.floor-1][index] = updatedItem;
+  }
+
 
   _addClientBox(String clientName, List<String> damageTypes, String boxContent, bool isPallet, {int indice}){
     final int lastIndex = (indice != null) ? indice : widget.shedTiles[widget.floor-1].length;
@@ -47,6 +130,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                   onClose: (){
                     setState(() {
                       print(widget.totalClients[widget.floor-1][lastIndex].name);
+                      setClientBox(widget.totalClients[widget.floor-1][lastIndex], lastIndex);
                     });
                   },
                   floor: widget.floor,

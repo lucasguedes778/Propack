@@ -11,9 +11,10 @@ class BoxInfoDialog extends StatefulWidget {
   int clientIndex;
   int floor;
   final VoidCallback onRemovePressed;
+  final VoidCallback onClose;
   bool editMode = false;
 
-  BoxInfoDialog({Key key, this.clients, this.clientIndex, @required this.floor , @required this.onRemovePressed}) : super(key: key);
+  BoxInfoDialog({Key key, this.clients, this.onClose, this.clientIndex, @required this.floor , @required this.onRemovePressed}) : super(key: key);
 
   @override
   _BoxInfoDialogState createState() => _BoxInfoDialogState();
@@ -259,10 +260,11 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                         padding: EdgeInsets.only(left:10.0),
                         child: RaisedButton(
                           onPressed: (){
-
                             setState(() {
                               saveShedData(widget.clients[widget.floor-1], widget.floor);
                             });
+
+                            widget.onClose();
 
                             Navigator.pop(context);
                           },

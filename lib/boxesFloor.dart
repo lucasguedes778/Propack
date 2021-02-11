@@ -5,6 +5,7 @@ import 'customized_widgets/add_box_dialog.dart';
 import 'generalData.dart';
 import 'customized_widgets/items_box.dart';
 import 'customized_widgets/box_info_dialog.dart';
+import 'customized_widgets/removeConfirmDialog.dart';
 
 //ignore: must_be_immutable
 class BoxesFloor extends StatefulWidget{
@@ -25,6 +26,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
   double zoomScale = 4.5;
   TransformationController controller = TransformationController();
 
+
   _addClientBox(String clientName, List<String> damageTypes, String boxContent, bool isPallet, {int indice}){
     final int lastIndex = (indice != null) ? indice : widget.shedTiles[widget.floor-1].length;
 
@@ -42,109 +44,57 @@ class _BoxesFloorState extends State<BoxesFloor>{
                 return BoxInfoDialog(
                   clients: widget.totalClients,
                   clientIndex: lastIndex,
+                  onClose: (){
+                    setState(() {
+                      print(widget.totalClients[widget.floor-1][lastIndex].name);
+                    });
+                  },
                   floor: widget.floor,
                   onRemovePressed: (){
                     showDialog(
                         context: context,
                         builder: (context){
-                          return Dialog(
-                              child: Container(
-                                  padding: EdgeInsets.all(20),
-                                  width: 250,
-                                  height: 200,
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Are you sure?",
-                                          style: TextStyle(
-                                              fontSize: 22
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              RaisedButton(
-                                                onPressed: (){
-                                                  Navigator.pop(context,false);
-                                                },
-                                                padding: EdgeInsets.all(0),
-                                                child: Container(
-                                                  color: Colors.grey,
-                                                  width: 100,
-                                                  height: 50,
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Cancel",
-                                                      style: TextStyle(
-                                                          color: Colors.white
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              RaisedButton(
-                                                onPressed: (){
-                                                  if(widget.floor < 3){
-                                                    if(widget.totalClients[widget.floor].length < widget.totalClients[widget.floor-1].length){
-                                                      setState(() {
-                                                        widget.shedTiles[widget.floor-1].removeAt(lastIndex);
-                                                        widget.totalClients[widget.floor-1].removeAt(lastIndex);
-                                                      });
-                                                    }else{
-                                                      setState(() {
-                                                        print("lastIndex: $lastIndex");
-                                                        widget.shedTiles[widget.floor-1].removeAt(lastIndex);
-                                                        widget.totalClients[widget.floor-1].removeAt(lastIndex);
+                          return RemoveConfirmation(
+                              onRemovePressed: (){
+                                if(widget.floor < 3){
+                                  if(widget.totalClients[widget.floor].length < widget.totalClients[widget.floor-1].length){
+                                    setState(() {
+                                      widget.shedTiles[widget.floor-1].removeAt(lastIndex);
+                                      widget.totalClients[widget.floor-1].removeAt(lastIndex);
+                                    });
+                                  }else{
+                                    setState(() {
+                                      print("lastIndex: ${lastIndex}");
+                                      widget.shedTiles[widget.floor-1].removeAt(lastIndex);
+                                      widget.totalClients[widget.floor-1].removeAt(lastIndex);
 
-                                                        var element_2 = widget.totalClients[widget.floor].removeAt(lastIndex);
-                                                        widget.totalClients[widget.floor-1].insert(lastIndex, element_2);
-                                                        _addClientBox(element_2.name, element_2.reasons, element_2.content, element_2.isPallet, indice: lastIndex);
+                                      var element_2 = widget.totalClients[widget.floor].removeAt(lastIndex);
+                                      widget.totalClients[widget.floor-1].insert(lastIndex, element_2);
+                                      _addClientBox(element_2.name, element_2.reasons, element_2.content, element_2.isPallet, indice: lastIndex);
 
-                                                        if(widget.floor == 1){
-                                                          if(widget.totalClients[widget.floor+1].length > widget.totalClients[widget.floor].length){
-                                                            var element_3 = widget.totalClients[widget.floor+1].removeAt(lastIndex);
-                                                            widget.totalClients[widget.floor].insert(lastIndex,element_3);
-                                                          }
-                                                        }
-                                                      });
-                                                    }
-                                                  }else{
-                                                    setState(() {
-                                                      widget.shedTiles[widget.floor-1].removeAt(lastIndex);
-                                                      widget.totalClients[widget.floor-1].removeAt(lastIndex);
-                                                    });
-                                                  }
-                                                  for(int i = widget.floor; i < 4; i++){
-                                                    saveShedData(widget.totalClients[i-1], i);
-                                                  }
-                                                  Navigator.pop(context,true);
-                                                },
-                                                padding: EdgeInsets.all(0),
-                                                child: Container(
-                                                  color: Colors.red,
-                                                  width: 100,
-                                                  height: 50,
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Remove",
-                                                      style: TextStyle(
-                                                          color: Colors.white
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                      ),
-                                    ],
-                                  )
-                              )
+                                      if(widget.floor == 1){
+                                        if(widget.totalClients[widget.floor+1].length > widget.totalClients[widget.floor].length){
+                                          var element_3 = widget.totalClients[widget.floor+1].removeAt(lastIndex);
+                                          widget.totalClients[widget.floor].insert(lastIndex,element_3);
+                                        }
+                                      }
+                                    });
+                                  }
+                                }else{
+                                  setState(() {
+                                    widget.shedTiles[widget.floor-1].removeAt(lastIndex);
+                                    widget.totalClients[widget.floor-1].removeAt(lastIndex);
+                                  });
+                                }
+                                for(int i = widget.floor; i < 4; i++){
+                                  saveShedData(widget.totalClients[i-1], i);
+                                }
+                              },
+                              addBox: _addClientBox,
+                              totalClients: widget.totalClients,
+                              shedTiles: widget.shedTiles,
+                              floor: widget.floor,
+                              index: lastIndex
                           );
                         }
                     ).then((value) {

@@ -11,6 +11,7 @@ class Shed extends StatefulWidget {
   FloorBoxesAmount boxesAmount = new FloorBoxesAmount(0, 0, 0);
   var clients = new List<List<ClientData>>.generate(3, (i)=> new List<ClientData>());
   var tiles = new List<List<Widget>>.generate(3, (i) => new List<Widget>());
+  int shedIndex = 1;
 
   @override
   _ShedState createState() => _ShedState();
@@ -110,10 +111,11 @@ class _ShedState extends State<Shed> {
                     ],
                   ),
                   onTap: () {
-                    // Update the state of the app
-                    // ...
-                    // Then close the drawer
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Text("test")),
+                    );
+
                   },
                 ),
                 ListTile(

@@ -3,13 +3,13 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 
-Future<File> _getFile(int floor) async{
+Future<File> _getFile(int floor, int shedIndex) async{
   final directory = await getApplicationDocumentsDirectory();
-  return File("${directory.path}/data_$floor.json");
+  return File("${directory.path}/data_$floor-$shedIndex.json");
 }
 
-saveShedData(List<ClientData>clients, int floor) async{
-  var file = await _getFile(floor);
+saveShedData(List<ClientData>clients, int floor, int shedIndex) async{
+  var file = await _getFile(floor,shedIndex);
 
   List formattedData = [];
 
@@ -29,9 +29,9 @@ saveShedData(List<ClientData>clients, int floor) async{
 
 }
 
-readShedData(int floor) async{
+readShedData(int floor, int shedIndex) async{
   try{
-    var file = await _getFile(floor);
+    var file = await _getFile(floor, shedIndex);
     if(await file.exists()){
       return file.readAsString();
     }else{

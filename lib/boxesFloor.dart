@@ -14,6 +14,7 @@ class BoxesFloor extends StatefulWidget{
   List<List<Widget>>shedTiles;
   List<ClientData> clients;
   int floor;
+  int shedIndex = 1;
   FloorBoxesAmount boxesAmount;
 
   BoxesFloor({Key key, this.offset,@required this.totalClients,@required this.shedTiles,@required this.floor, @required this.boxesAmount}) : super(key: key);
@@ -83,7 +84,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                   });
                                 }
                                 for(int i = widget.floor; i < 4; i++){
-                                  saveShedData(widget.totalClients[i-1], i);
+                                  saveShedData(widget.totalClients[i-1], i, widget.shedIndex);
                                 }
                               },
                               addBox: _addClientBox,
@@ -171,7 +172,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                   });
                                 }
                                 for(int i = widget.floor; i < 4; i++){
-                                  saveShedData(widget.totalClients[i-1], i);
+                                  saveShedData(widget.totalClients[i-1], i, widget.shedIndex);
                                 }
                               },
                               addBox: _addClientBox,
@@ -227,7 +228,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                   floor: widget.floor,
                   dialogContext: dialogContext,
                   onConfirm: (String newClientName, List<String>newClientReasons, String newClientContent, bool isPallet){
-                    saveShedData(widget.totalClients[widget.floor-1], widget.floor);
+                    saveShedData(widget.totalClients[widget.floor-1], widget.floor, widget.shedIndex);
                     setState(() {
                       print("isPallet: $isPallet");
                       _addClientBox(newClientName, newClientReasons, newClientContent, isPallet);
@@ -288,7 +289,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
         widget.totalClients[widget.floor-1].insert(newIndex,element);
         widget.shedTiles[widget.floor-1].insert(newIndex, row);
 
-        saveShedData(widget.totalClients[widget.floor-1], widget.floor);
+        saveShedData(widget.totalClients[widget.floor-1], widget.floor, widget.shedIndex);
       });
     }
 

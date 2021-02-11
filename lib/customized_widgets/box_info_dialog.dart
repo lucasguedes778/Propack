@@ -10,6 +10,7 @@ class BoxInfoDialog extends StatefulWidget {
   List<List<ClientData>> clients;
   int clientIndex;
   int floor;
+  int shedIndex = 1;
   final VoidCallback onRemovePressed;
   final VoidCallback onClose;
   bool editMode = false;
@@ -210,7 +211,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                                   widget.editMode = true;
                                 else{
                                   if(widget.editMode == true){
-                                    saveShedData(widget.clients[widget.floor-1], widget.floor);
+                                    saveShedData(widget.clients[widget.floor-1], widget.floor, widget.shedIndex);
                                   }
                                   widget.editMode = !widget.editMode;
                                 }
@@ -261,7 +262,7 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                         child: RaisedButton(
                           onPressed: (){
                             setState(() {
-                              saveShedData(widget.clients[widget.floor-1], widget.floor);
+                              saveShedData(widget.clients[widget.floor-1], widget.floor, widget.shedIndex);
                             });
 
                             widget.onClose();

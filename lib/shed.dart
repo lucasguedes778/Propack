@@ -51,7 +51,7 @@ class _ShedState extends State<Shed> {
   _fetchData() {
     return this._memoizer.runOnce(() async {
       for(int i = 1; i < 4; i++){
-        await readShedData(i).then((data){
+        await readShedData(i,widget.shedIndex).then((data){
           if(data != null){
             print("Stored data: $data");
             var decodedData = json.decode(data);

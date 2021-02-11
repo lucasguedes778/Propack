@@ -11,7 +11,9 @@ class Shed extends StatefulWidget {
   FloorBoxesAmount boxesAmount = new FloorBoxesAmount(0, 0, 0);
   var clients = new List<List<ClientData>>.generate(3, (i)=> new List<ClientData>());
   var tiles = new List<List<Widget>>.generate(3, (i) => new List<Widget>());
-  int shedIndex = 1;
+  int shedIndex;
+
+  Shed({Key key, this.shedIndex}) : super(key: key);
 
   @override
   _ShedState createState() => _ShedState();
@@ -113,7 +115,7 @@ class _ShedState extends State<Shed> {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Text("test")),
+                      MaterialPageRoute(builder: (context) => Shed(shedIndex: 1)),
                     );
 
                   },
@@ -129,10 +131,10 @@ class _ShedState extends State<Shed> {
                     ],
                   ),
                   onTap: () {
-                    // Update the state of the app
-                    // ...
-                    // Then close the drawer
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Shed(shedIndex:2)),
+                    );
                   },
                 ),
               ]
@@ -155,7 +157,7 @@ class _ShedState extends State<Shed> {
                     future: this._fetchData(),
                     builder: (context, snapshot){
                       if(snapshot.hasData){
-                        return BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 1,boxesAmount: widget.boxesAmount);
+                        return BoxesFloor(shedIndex: widget.shedIndex,totalClients: widget.clients, shedTiles: widget.tiles,floor: 1,boxesAmount: widget.boxesAmount);
                       }
                       return Container(
                         child: Center(
@@ -167,7 +169,7 @@ class _ShedState extends State<Shed> {
                       future: this._fetchData(),
                       builder: (context, snapshot){
                         if(snapshot.hasData){
-                          return BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 2,boxesAmount: widget.boxesAmount);
+                          return BoxesFloor(shedIndex: widget.shedIndex,totalClients: widget.clients, shedTiles: widget.tiles,floor: 2,boxesAmount: widget.boxesAmount);
                         }
                         return Container(
                             child: Center(
@@ -179,7 +181,7 @@ class _ShedState extends State<Shed> {
                       future: this._fetchData(),
                       builder: (context, snapshot){
                         if(snapshot.hasData){
-                          return BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: 3,boxesAmount: widget.boxesAmount);
+                          return BoxesFloor(shedIndex: widget.shedIndex,totalClients: widget.clients, shedTiles: widget.tiles,floor: 3,boxesAmount: widget.boxesAmount);
                         }
                         return Container(
                             child: Center(

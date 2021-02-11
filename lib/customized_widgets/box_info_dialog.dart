@@ -10,12 +10,12 @@ class BoxInfoDialog extends StatefulWidget {
   List<List<ClientData>> clients;
   int clientIndex;
   int floor;
-  int shedIndex = 1;
+  int shedIndex;
   final VoidCallback onRemovePressed;
   final VoidCallback onClose;
   bool editMode = false;
 
-  BoxInfoDialog({Key key, this.clients, this.onClose, this.clientIndex, @required this.floor , @required this.onRemovePressed}) : super(key: key);
+  BoxInfoDialog({Key key,@required this.shedIndex,this.clients, this.onClose, this.clientIndex, @required this.floor , @required this.onRemovePressed}) : super(key: key);
 
   @override
   _BoxInfoDialogState createState() => _BoxInfoDialogState();

@@ -14,10 +14,10 @@ class BoxesFloor extends StatefulWidget{
   List<List<Widget>>shedTiles;
   List<ClientData> clients;
   int floor;
-  int shedIndex = 1;
+  int shedIndex;
   FloorBoxesAmount boxesAmount;
 
-  BoxesFloor({Key key, this.offset,@required this.totalClients,@required this.shedTiles,@required this.floor, @required this.boxesAmount}) : super(key: key);
+  BoxesFloor({Key key, this.offset, @required this.shedIndex,@required this.totalClients,@required this.shedTiles,@required this.floor, @required this.boxesAmount}) : super(key: key);
 
   @override
   _BoxesFloorState createState() => _BoxesFloorState();
@@ -39,6 +39,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
               builder: (context){
                 return BoxInfoDialog(
                   clients: widget.totalClients,
+                  shedIndex: widget.shedIndex,
                   clientIndex: index,
                   onClose: (){
                     setState(() {

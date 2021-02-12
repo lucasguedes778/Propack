@@ -115,7 +115,10 @@ class _ShedState extends State<Shed> {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Shed(shedIndex: 1)),
+                      PageRouteBuilder(
+                        transitionDuration: Duration.zero,
+                        pageBuilder: (_, __, ___) => Shed(shedIndex: 1),
+                      ),
                     );
 
                   },
@@ -133,7 +136,10 @@ class _ShedState extends State<Shed> {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Shed(shedIndex:2)),
+                      PageRouteBuilder(
+                        transitionDuration: Duration.zero,
+                        pageBuilder: (_, __, ___) => Shed(shedIndex: 2),
+                      ),
                     );
                   },
                 ),

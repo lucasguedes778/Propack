@@ -24,7 +24,7 @@ class BoxesFloor extends StatefulWidget{
 }
 
 class _BoxesFloorState extends State<BoxesFloor>{
-  double zoomScale = 4.5;
+  double zoomScale = 3;
   TransformationController controller = TransformationController();
 
   setClientBox(ClientData clientData, int index){

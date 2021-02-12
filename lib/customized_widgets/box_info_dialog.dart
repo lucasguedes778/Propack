@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
-import 'package:victor_hugo_app_prototype/customized_widgets/add_box_dialog.dart';
 import 'package:victor_hugo_app_prototype/customized_widgets/reasonsSelector.dart';
 import '../generalData.dart';
 

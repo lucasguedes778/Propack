@@ -7,6 +7,7 @@ class ItemsBox extends StatefulWidget {
   bool isPallet;
   var context;
   final VoidCallback onDoubleTap;
+  double sideLen = 29;
 
   ItemsBox({Key key,this.clientName,this.isPallet, this.context, this.damageTypes, this.onDoubleTap}) : super(key: key);
 
@@ -86,8 +87,8 @@ class _ItemsBoxState extends State<ItemsBox> {
             )
           )
       ),
-      width: 29,
-      height: 29,
+      width: widget.sideLen,
+      height: widget.sideLen,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.black)

@@ -62,7 +62,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                     });
                                   }else{
                                     setState(() {
-                                      print("lastIndex: ${index}");
+                                      print("lastIndex: $index");
                                       widget.shedTiles[widget.floor-1].removeAt(index);
                                       widget.totalClients[widget.floor-1].removeAt(index);
 
@@ -115,8 +115,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
   _addClientBox(String clientName, List<String> damageTypes, String boxContent, bool isPallet, {int indice}){
     final int lastIndex = (indice != null) ? indice : widget.shedTiles[widget.floor-1].length;
 
-    ClientData newClient = new ClientData(clientName, damageTypes, boxContent, isPallet);
-
     var newItem = ItemsBox(
         clientName: clientName,
         context: context,
@@ -127,6 +125,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
               context: context,
               builder: (context){
                 return BoxInfoDialog(
+                  shedIndex: widget.shedIndex,
                   clients: widget.totalClients,
                   clientIndex: lastIndex,
                   onClose: (){
@@ -150,7 +149,7 @@ class _BoxesFloorState extends State<BoxesFloor>{
                                     });
                                   }else{
                                     setState(() {
-                                      print("lastIndex: ${lastIndex}");
+                                      print("lastIndex: $lastIndex");
                                       widget.shedTiles[widget.floor-1].removeAt(lastIndex);
                                       widget.totalClients[widget.floor-1].removeAt(lastIndex);
 

@@ -39,7 +39,7 @@ class _ShedState extends State<Shed> {
 
   Widget floor(int floor){
     if(counter == 3)
-      return BoxesFloor(totalClients: widget.clients, shedTiles: widget.tiles,floor: floor,boxesAmount: widget.boxesAmount);
+      return BoxesFloor(shedIndex:  widget.shedIndex,totalClients: widget.clients, shedTiles: widget.tiles,floor: floor,boxesAmount: widget.boxesAmount);
 
     return Center(
       child: Container(

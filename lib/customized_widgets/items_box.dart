@@ -49,50 +49,55 @@ class _ItemsBoxState extends State<ItemsBox> {
     return Icon(Icons.circle,size: 4,color: Colors.transparent);
   }
 
-  @override
-  Widget build(BuildContext context) {
+  box(double sideLen){
     return Container(
       child: Center(
 
           child: InkWell(
-            onDoubleTap: () {
-              widget.onDoubleTap();
-            },
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    widget.clientName,
-                    style: TextStyle(
-                        fontSize: 5,
-                        color: Colors.black
+              onDoubleTap: () {
+                widget.onDoubleTap();
+              },
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      widget.clientName,
+                      style: TextStyle(
+                          fontSize: 5,
+                          color: Colors.black
+                      ),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Row(
-                    children: [
-                      getDamageIndicators(),
-                    ],
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Row(
+                      children: [
+                        getDamageIndicators(),
+                      ],
+                    ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: palletIndicator()
-                )
+                  Align(
+                      alignment: Alignment.bottomRight,
+                      child: palletIndicator()
+                  )
 
-              ],
-            )
+                ],
+              )
           )
       ),
-      width: widget.sideLen,
-      height: widget.sideLen,
+      width: sideLen,
+      height: sideLen,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.black)
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return  (MediaQuery.of(context).orientation == Orientation.portrait) ?
+      box(29) : box(59);
   }
 }

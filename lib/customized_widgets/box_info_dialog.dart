@@ -22,6 +22,8 @@ class BoxInfoDialog extends StatefulWidget {
 
 class _BoxInfoDialogState extends State<BoxInfoDialog> {
 
+
+
   List<Padding> getReasons(){
     List<Padding> reasons = List<Padding>();
 
@@ -209,10 +211,13 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                                 if(widget.editMode == null)
                                   widget.editMode = true;
                                 else{
-                                  if(widget.editMode == true){
+                                  if(widget.editMode == true && widget.clients[widget.floor-1][widget.clientIndex].reasons.length > 0){
                                     saveShedData(widget.clients[widget.floor-1], widget.floor, widget.shedIndex);
+                                    widget.editMode = !widget.editMode;
+                                  }else if(widget.editMode == false){
+                                    widget.editMode = !widget.editMode;
                                   }
-                                  widget.editMode = !widget.editMode;
+
                                 }
 
 
@@ -260,13 +265,15 @@ class _BoxInfoDialogState extends State<BoxInfoDialog> {
                         padding: EdgeInsets.only(left:10.0),
                         child: RaisedButton(
                           onPressed: (){
-                            setState(() {
-                              saveShedData(widget.clients[widget.floor-1], widget.floor, widget.shedIndex);
-                            });
+                            if(widget.clients[widget.floor-1][widget.clientIndex].reasons.length > 0){
+                              setState(() {
+                                saveShedData(widget.clients[widget.floor-1], widget.floor, widget.shedIndex);
+                              });
 
-                            widget.onClose();
+                              widget.onClose();
 
-                            Navigator.pop(context);
+                              Navigator.pop(context);
+                            }
                           },
                           padding: EdgeInsets.all(0),
                           child: Container(

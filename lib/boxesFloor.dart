@@ -288,7 +288,6 @@ class _BoxesFloorState extends State<BoxesFloor>{
         ClientData element = widget.totalClients[widget.floor-1].removeAt(oldIndex);
         widget.totalClients[widget.floor-1].insert(newIndex,element);
         widget.shedTiles[widget.floor-1].insert(newIndex, row);
-
         saveShedData(widget.totalClients[widget.floor-1], widget.floor, widget.shedIndex);
       });
     }
